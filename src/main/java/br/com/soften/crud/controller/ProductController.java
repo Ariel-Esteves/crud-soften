@@ -1,32 +1,43 @@
 package br.com.soften.crud.controller;
 
-import br.com.soften.crud.models.entities.ProductRegistration;
-import br.com.soften.crud.repositories.ProductRepository;
-import org.apache.coyote.Response;
+import br.com.soften.crud.models.entities.Product;
+import br.com.soften.crud.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController{
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @PostMapping(value = "/save", consumes = "application/json")
-    public ResponseEntity<?> save(@RequestBody ProductRegistration product){
-        ProductRegistration save = productRepository.save(product);
+    public ResponseEntity<?> save(@RequestBody Product product){
+        Product save = productService.save(product);
         return ResponseEntity.ok(save);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/findall")
     public ResponseEntity<?> findAll(){
-        List<ProductRegistration> product = productRepository.findAll();
+        List<Product> product = productService.findAll();
         return ResponseEntity.ok(product);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable long id){
+        Optional<Product> res = productService.findById(id);
+        return ResponseEntity.ok(res);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable long id){
+        productService.deleteById(id);
+    }
+
 
 }

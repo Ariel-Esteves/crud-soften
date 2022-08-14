@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,15 +20,22 @@ public class Sales implements Serializable {
     @Column(length = 60)
     private String client;
 
-    @Column(scale = 4, precision = 2, nullable = false)
-    private float product;
+    @Column(length = 60)
+    private String product;
 
-    @Column(scale = 4, precision = 2, nullable = false)
+    @Column(scale = 5, precision = 2, nullable = false)
     private float amount;
 
-    @Column(scale = 4 , precision = 2, nullable = false)
+    @Column(scale = 6 , precision = 2, nullable = false)
     private float unitaryValue;
 
-    @Column(scale = 4, precision = 2, nullable = false)
+    @Column(scale = 6, precision = 2, nullable = false)
     private float totalValue;
+
+    @ManyToOne()
+    @JoinColumn(name = "cadClient")
+    private Client cadClient;
+
+    @ManyToMany()
+    private List<Product> products;
 }
