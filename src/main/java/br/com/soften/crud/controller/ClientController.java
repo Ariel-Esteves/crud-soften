@@ -27,6 +27,12 @@ public class ClientController {
 		return ResponseEntity.ok(save);
 	}
 
+	@PostMapping("/update")
+	public ResponseEntity<?> update(@RequestBody Client client){
+		Client update = clientService.save(client);
+		return ResponseEntity.ok(update);
+	}
+
 	@DeleteMapping("/remove/{id}")
 	public ResponseEntity<?> remove(@PathVariable long id){
 		clientService.remove(id);

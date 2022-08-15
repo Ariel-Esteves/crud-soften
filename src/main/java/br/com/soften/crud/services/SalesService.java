@@ -20,9 +20,13 @@ public class SalesService {
 
     public Sales save(Sales entity ){ return salesRepository.save(entity);}
 
-    public void deleteById(long id){ salesRepository.deleteById(id);}
+    public void deleteById(long id){}
 
     public List<Sales> findAll(){ return salesRepository.findAll();}
+
+    public Sales update(Sales sales){ return salesRepository.save(sales); }
+
+    public List<Sales> findByContainingCadClient(String client){ return salesRepository.findByContainingCadClient(client);}
 
 
 }

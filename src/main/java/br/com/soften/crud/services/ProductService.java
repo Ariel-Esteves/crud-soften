@@ -21,4 +21,7 @@ public class ProductService {
 
     public void deleteById(long id){productRepository.deleteById(id);}
 
+    public Product replace(Product product){ return productRepository.save(product);}
+
+    public List<Product> findByNameContaining(String name){ return productRepository.findByNameContaining(name);}
 }

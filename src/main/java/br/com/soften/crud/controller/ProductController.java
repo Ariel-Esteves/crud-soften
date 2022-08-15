@@ -28,16 +28,20 @@ public class ProductController{
         return ResponseEntity.ok(product);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable long id){
         Optional<Product> res = productService.findById(id);
         return ResponseEntity.ok(res);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable long id){
         productService.deleteById(id);
     }
+    @PostMapping("/replace")
+    public Product replace(@RequestBody Product product){ return productService.replace(product); }
 
+    @GetMapping("find/{name}")
+    public List<Product> findByNameContaining(@PathVariable String name ){return productService.findByNameContaining(name);}
 
 }

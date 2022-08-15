@@ -5,12 +5,10 @@ import br.com.soften.crud.services.SalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/sales")
@@ -19,6 +17,16 @@ public class SalesEntity {
     @Autowired
     SalesService salesService;
 
+    @RequestMapping("/find/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        Optional<Sales> sales = salesService.findById(id);
+        return ResponseEntity.ok(sales);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteById(@PathVariable Long id){
+        salesService.deleteById(id);
+    }
     @RequestMapping("/getall")
     public ResponseEntity<?> findAll(){
         List<Sales> res = salesService.findAll();
@@ -26,8 +34,20 @@ public class SalesEntity {
     }
 
     @PostMapping(value="/save", consumes = "application/json")
-    public ResponseEntity<?> save(@RequestBody Sales req){
-        Sales res = salesService.save(req);
+    public ResponseEntity<?> save(@RequestBody Sales sales){
+        Sales res = salesService.save(sales);
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@RequestBody Sales sales){
+        Sales res = salesService.save(sales);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/find/{name}")
+    public ResponseEntity<?> findByContainingCadClient(@RequestBody String name){
+        List<Sales> sales = salesService.findByContainingCadClient(name);
+        return ResponseEntity.ok(sales);
     }
 }
