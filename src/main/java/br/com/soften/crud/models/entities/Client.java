@@ -44,6 +44,7 @@ public class Client implements Serializable {
 	@Column(length=60, nullable=false)
 	private String city;
 
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private States state;
 }

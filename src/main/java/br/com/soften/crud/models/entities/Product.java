@@ -18,13 +18,13 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     private String name;
 
-    @Column(scale = 4, precision = 2)
+    @Column(scale = 10, precision = 4, nullable = false)
     private float costValue;
 
-    @Column(scale = 4, precision = 2)
+    @Column(scale = 10, precision = 4, nullable = false)
     private float saleValue;
 
     @ManyToMany()

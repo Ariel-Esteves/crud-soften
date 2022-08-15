@@ -17,19 +17,19 @@ public class Sales implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     private String client;
 
-    @Column(length = 60)
+    @Column(scale = 10, precision = 4, nullable = false)
     private String product;
 
-    @Column(scale = 5, precision = 2, nullable = false)
+    @Column(scale = 10, precision = 4, nullable = false)
     private float amount;
 
-    @Column(scale = 6 , precision = 2, nullable = false)
+    @Column(scale = 10 , precision = 4, nullable = false)
     private float unitaryValue;
 
-    @Column(scale = 6, precision = 2, nullable = false)
+    @Column(scale = 10, precision = 2, nullable = false)
     private float totalValue;
 
     @ManyToOne()
