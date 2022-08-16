@@ -4,7 +4,6 @@ import br.com.soften.crud.models.entities.Sales;
 import br.com.soften.crud.services.SalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +11,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/sales")
-public class SalesEntity {
-
+public class SalesController {
     @Autowired
-    SalesService salesService;
+   private SalesService salesService;
 
     @RequestMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
@@ -47,7 +45,7 @@ public class SalesEntity {
 
     @GetMapping("/find/{name}")
     public ResponseEntity<?> findByContainingCadClient(@RequestBody String name){
-        List<Sales> sales = salesService.findByContainingCadClient(name);
+        List<Sales> sales = salesService.findByCadClientContaining(name);
         return ResponseEntity.ok(sales);
     }
 }

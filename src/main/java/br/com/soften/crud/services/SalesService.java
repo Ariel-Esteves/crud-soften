@@ -13,7 +13,7 @@ public class SalesService {
 
 
     @Autowired
-    SalesRepository salesRepository;
+    private SalesRepository salesRepository;
 
 
     public Optional<Sales> findById(long id){ return salesRepository.findById(id);}
@@ -26,7 +26,7 @@ public class SalesService {
 
     public Sales update(Sales sales){ return salesRepository.save(sales); }
 
-    public List<Sales> findByContainingCadClient(String client){ return salesRepository.findByContainingCadClient(client);}
+    public List<Sales> findByCadClientContaining(String client){ return salesRepository.findByCadClientContaining(client);}
 
 
 }

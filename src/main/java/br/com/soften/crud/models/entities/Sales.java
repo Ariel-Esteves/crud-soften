@@ -20,16 +20,16 @@ public class Sales implements Serializable {
     @Column(length = 60, nullable = false)
     private String client;
 
-    @Column(scale = 10, precision = 4, nullable = false)
+    @Column(scale = 4, precision = 10, nullable = false)
     private String product;
 
-    @Column(scale = 10, precision = 4, nullable = false)
+    @Column(scale = 4, precision = 10, nullable = false)
     private float amount;
 
-    @Column(scale = 10 , precision = 4, nullable = false)
+    @Column(scale = 4 , precision = 10, nullable = false)
     private float unitaryValue;
 
-    @Column(scale = 10, precision = 2, nullable = false)
+    @Column(scale = 4, precision = 10, nullable = false)
     private float totalValue;
 
     @ManyToOne()

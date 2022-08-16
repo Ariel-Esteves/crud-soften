@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SalesRepository extends JpaRepository<Sales, Long> {
-    List<Sales> findByContainingCadClient(String name);
+    List<Sales> findByCadClientContaining(String name);
 
 }
