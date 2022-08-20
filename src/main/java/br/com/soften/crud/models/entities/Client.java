@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -14,8 +17,8 @@ import java.io.Serializable;
 @Builder
 public class Client implements Serializable {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@Column(length=60, nullable=false)
 	private String name;
@@ -47,4 +50,9 @@ public class Client implements Serializable {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private States state;
+
+	@OneToMany
+	private Set<Sales> sales_id = new HashSet<>();
+
+
 }

@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter
@@ -13,11 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Sales implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 60, nullable = false, insertable = false, updatable = false)
     private String client;
 
     @Column(scale = 4, precision = 10, nullable = false)
@@ -32,10 +32,13 @@ public class Sales implements Serializable {
     @Column(scale = 4, precision = 10, nullable = false)
     private float totalValue;
 
-    @ManyToOne()
-    @JoinColumn(name = "cadClient")
-    private Client cadClient;
+    @ManyToOne
+    private Product product_id;
 
-    @ManyToMany()
-    private List<Product> products;
+    @ManyToOne
+    private Client client_id;
+
+  /*  @ManyToMany
+    @JoinTable(name = "order_products")
+    private Set<Product> products = new HashSet<>(); */
 }

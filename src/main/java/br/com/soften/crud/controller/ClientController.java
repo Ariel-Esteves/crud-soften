@@ -15,7 +15,7 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 
-	@GetMapping("/{id}")
+	@GetMapping("find/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id){
 		Client client = clientService.findById(id);
 		return ResponseEntity.ok(client);

@@ -4,7 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -27,6 +28,18 @@ public class Product implements Serializable {
     @Column(scale = 4, precision = 10, nullable = false)
     private float saleValue;
 
-    @ManyToMany()
-    private List<Sales> sale;
+    @OneToMany
+    private Set<Sales> sales = new HashSet<>();
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "order_id", insertable = false, updatable = false),
+            @JoinColumn(name = "test_id", insertable = false, updatable = false)
+    })*/
+
+
+   // @ManyToOne
+  //  private Order test;
+   /* @ManyToMany(mappedBy = "products")
+    private Set<Sales> sales = new HashSet<>(); */
+
 }

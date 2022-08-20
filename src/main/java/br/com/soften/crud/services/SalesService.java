@@ -16,7 +16,9 @@ public class SalesService {
     private SalesRepository salesRepository;
 
 
-    public Optional<Sales> findById(long id){ return salesRepository.findById(id);}
+    public Optional<Sales> findById(long id){
+
+        return salesRepository.findById(id);}
 
     public Sales save(Sales entity ){ return salesRepository.save(entity);}
 
@@ -26,7 +28,7 @@ public class SalesService {
 
     public Sales update(Sales sales){ return salesRepository.save(sales); }
 
-    public List<Sales> findByCadClientContaining(String client){ return salesRepository.findByCadClientContaining(client);}
+
 
 
 }

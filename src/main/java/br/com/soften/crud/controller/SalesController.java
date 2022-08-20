@@ -2,6 +2,7 @@ package br.com.soften.crud.controller;
 
 import br.com.soften.crud.models.entities.Sales;
 import br.com.soften.crud.services.SalesService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class SalesController {
     @PostMapping(value="/save", consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody Sales sales){
         Sales res = salesService.save(sales);
+
         return ResponseEntity.ok(res);
     }
 
@@ -43,9 +45,7 @@ public class SalesController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/find/{name}")
-    public ResponseEntity<?> findByContainingCadClient(@RequestBody String name){
-        List<Sales> sales = salesService.findByCadClientContaining(name);
-        return ResponseEntity.ok(sales);
-    }
+
+
+
 }

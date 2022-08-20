@@ -1,11 +1,12 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
     show-sql: true
+    open-in-view: true
   datasource:
     username: root
     password: 241198
