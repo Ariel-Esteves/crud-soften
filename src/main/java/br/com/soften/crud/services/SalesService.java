@@ -5,6 +5,7 @@ import br.com.soften.crud.repositories.SalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class SalesService {
 
         return salesRepository.findById(id);}
 
-    public Sales save(Sales entity ){ return salesRepository.save(entity);}
+    public Sales save(Sales entity ){ return salesRepository.save(entity); }
 
     public void deleteById(long id){}
 
@@ -28,7 +29,6 @@ public class SalesService {
 
     public Sales update(Sales sales){ return salesRepository.save(sales); }
 
-
-
+    public List<Object> getRelationalTable(){ return salesRepository.getRelationalTable();}
 
 }

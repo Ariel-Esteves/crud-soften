@@ -11,10 +11,11 @@ import java.util.List;
 public interface SalesRepository extends JpaRepository<Sales, Long> {
 
 
-    @Query(
-            value= "SELECT * FROM sales_products",
-            nativeQuery = true )
-    List<?> getRelationalTable();
+   @Query(
+           value = "select * from set_products;",
+           nativeQuery = true
+   )
+    public List<Object> getRelationalTable();
 
 
 }

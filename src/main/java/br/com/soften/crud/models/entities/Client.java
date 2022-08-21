@@ -1,12 +1,12 @@
 package br.com.soften.crud.models.entities;
 
 import br.com.soften.crud.models.enums.States;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +18,7 @@ import java.util.Set;
 public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
 	@Column(length=60, nullable=false)
 	private String name;
@@ -51,8 +51,7 @@ public class Client implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private States state;
 
-	@OneToMany
-	private Set<Sales> sales_id = new HashSet<>();
+
 
 
 }

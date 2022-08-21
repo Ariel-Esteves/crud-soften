@@ -1,5 +1,6 @@
 package br.com.soften.crud.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,18 +29,5 @@ public class Product implements Serializable {
     @Column(scale = 4, precision = 10, nullable = false)
     private float saleValue;
 
-    @OneToMany
-    private Set<Sales> sales = new HashSet<>();
-   /* @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "order_id", insertable = false, updatable = false),
-            @JoinColumn(name = "test_id", insertable = false, updatable = false)
-    })*/
-
-
-   // @ManyToOne
-  //  private Order test;
-   /* @ManyToMany(mappedBy = "products")
-    private Set<Sales> sales = new HashSet<>(); */
 
 }

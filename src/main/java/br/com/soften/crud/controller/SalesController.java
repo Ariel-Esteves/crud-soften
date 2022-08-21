@@ -26,13 +26,13 @@ public class SalesController {
     public void deleteById(@PathVariable Long id){
         salesService.deleteById(id);
     }
-    @RequestMapping("/getall")
+    @RequestMapping("/findall")
     public ResponseEntity<?> findAll(){
         List<Sales> res = salesService.findAll();
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping(value="/save", consumes = "application/json")
+    @PostMapping(value="/save")
     public ResponseEntity<?> save(@RequestBody Sales sales){
         Sales res = salesService.save(sales);
 
@@ -45,6 +45,11 @@ public class SalesController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/relational")
+    public ResponseEntity<?> relational(){
+        List<Object> res = salesService.getRelationalTable();
+        return ResponseEntity.ok(res);
+    }
 
 
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
 public class Sales implements Serializable {
 
@@ -17,10 +18,10 @@ public class Sales implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 60, nullable = false, insertable = false, updatable = false)
+    @Column(length = 60, nullable = false, updatable = false)
     private String client;
 
-    @Column(scale = 4, precision = 10, nullable = false)
+   @Column(scale = 4, precision = 10, nullable = false)
     private String product;
 
     @Column(scale = 4, precision = 10, nullable = false)
@@ -29,16 +30,13 @@ public class Sales implements Serializable {
     @Column(scale = 4 , precision = 10, nullable = false)
     private float unitaryValue;
 
-    @Column(scale = 4, precision = 10, nullable = false)
+    @Column(scale = 4 , precision = 10, nullable = false)
     private float totalValue;
 
-    @ManyToOne
+  //  @Column(scale = 4, precision = 10, nullable = false, insertable = false)
+   // private float totalValue;
+
+    @OneToOne
     private Product product_id;
 
-    @ManyToOne
-    private Client client_id;
-
-  /*  @ManyToMany
-    @JoinTable(name = "order_products")
-    private Set<Product> products = new HashSet<>(); */
 }
