@@ -31,10 +31,7 @@ public class Sales implements Serializable {
     private float unitaryValue;
 
     @Column(scale = 4 , precision = 10, nullable = false)
-    private float totalValue;
-
-  //  @Column(scale = 4, precision = 10, nullable = false, insertable = false)
-   // private float totalValue;
+    private float totalValue;;
 
     @OneToOne
     private Product product_id;

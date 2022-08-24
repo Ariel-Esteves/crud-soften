@@ -1,5 +1,7 @@
 package br.com.soften.crud.services;
 
+import br.com.soften.crud.models.Dto.SalesDto;
+import br.com.soften.crud.models.entities.Product;
 import br.com.soften.crud.models.entities.Sales;
 import br.com.soften.crud.repositories.SalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,8 @@ public class SalesService {
 
     @Autowired
     private SalesRepository salesRepository;
-
+    @Autowired
+    private ProductService productService;
 
     public Optional<Sales> findById(long id){
 
@@ -27,7 +30,9 @@ public class SalesService {
 
     public List<Sales> findAll(){ return salesRepository.findAll();}
 
-    public Sales update(Sales sales){ return salesRepository.save(sales); }
+    public Sales update(Sales sales){
+
+        return salesRepository.save(sales); }
 
     public List<Object> getRelationalTable(){ return salesRepository.getRelationalTable();}
 

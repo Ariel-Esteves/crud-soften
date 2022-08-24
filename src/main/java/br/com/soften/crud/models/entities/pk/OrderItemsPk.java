@@ -6,10 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-
 @Embeddable
 @Getter
 @Setter

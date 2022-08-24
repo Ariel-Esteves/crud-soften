@@ -1,13 +1,9 @@
 package br.com.soften.crud.models.entities;
 
 import br.com.soften.crud.models.enums.States;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter

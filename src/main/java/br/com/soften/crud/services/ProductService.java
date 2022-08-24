@@ -17,7 +17,13 @@ public class ProductService {
 
     public Product save(Product product){return productRepository.save(product); }
 
-    public Optional<Product> findById(long id){ return productRepository.findById(id);}
+    public Optional<?> findById(long id){
+        if ( productRepository.findById(id).getClass().equals(Optional.class)) {
+            return productRepository.findById(id);
+        }else{
+            return productRepository.findById(id);
+        }
+       }
 
     public void deleteById(long id){productRepository.deleteById(id);}
 
