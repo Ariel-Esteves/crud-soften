@@ -3,45 +3,35 @@ package br.com.soften.crud.services;
 import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 
 @Service
 public class ClientService {
+
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@Value("${service.name}")
-	private String name;
+	public Client save (Client req){ return clientRepository.save(req) ; }
 
-	public Client save(Client client){
-		if(client.getName() == null){
-			client.setName(name);
+	public Optional<Client> findById(long id){return clientRepository.findById(id); }
+
+	public List<Client> findAll(){return clientRepository.findAll();}
+
+	public String delete(long id){
+		Optional<Client> client = findById(id);
+		boolean res = client.isPresent() ? true  : false;
+
+		if(res){
+			clientRepository.delete(client.get());
+			return "done";
+		} else {
+			return "not found";
 		}
-		return clientRepository.save(client);
 	}
-
-	public void remove(long id){
-		clientRepository.deleteById(id);
-	}
-
-	public Client findById(long id){
-		return clientRepository.findById(id).orElse(new Client());
-	}
-
-	public List<Client> findAll(){
-		return clientRepository.findAll();
-	}
-
-	public List<Client> findByName(String name){
-		return clientRepository.findByNameContaining(name);
-	}
-
-	public List<Client> findByNameContaining(String name){return clientRepository.findByNameContaining(name);}
-
-	public Client update(Client client){ return clientRepository.save(client);}
-
 
 }

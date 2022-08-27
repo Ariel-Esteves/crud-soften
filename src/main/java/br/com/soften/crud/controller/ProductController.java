@@ -6,42 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/product")
 public class ProductController{
 
     @Autowired
-    private ProductService productService;
+    ProductService productService;
 
-    @PostMapping(value = "/save", consumes = "application/json")
-    public ResponseEntity<?> save(@RequestBody Product product){
-        Product save = productService.save(product);
-        return ResponseEntity.ok(save);
+    @GetMapping("findbyid/{id}")
+    public ResponseEntity<?> save(@PathVariable long id){
+        Optional<?> product =productService.findById(id);
+        return product.isPresent()? ResponseEntity.ok(product) : ResponseEntity.badRequest().build();
     }
+
+
+    @PostMapping("save")
+    public ResponseEntity<?> save(@RequestBody Product product){
+        Product req = productService.save(product);
+        return ResponseEntity.ok(req);
+    }
+
+    @PostMapping("put")
+    public ResponseEntity<?> update(@RequestBody Product product){
+        Product req = productService.save(product);
+        return ResponseEntity.ok(req);
+    }
+
+
 
     @GetMapping("/findall")
-    public ResponseEntity<?> findAll(){
-        List<Product> product = productService.findAll();
-        return ResponseEntity.ok(product);
-    }
-
-    @GetMapping("/find/{id}")
-    public ResponseEntity<?> findById(@PathVariable long id){
-        Optional<?> res = productService.findById(id);
-        return ResponseEntity.ok(res);
+    public ResponseEntity<?> findall(){
+        return ResponseEntity.ok(productService.findAll());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable long id){
-        productService.deleteById(id);
-    }
-    @PostMapping("/replace")
-    public Product replace(@RequestBody Product product){ return productService.replace(product); }
-
-    @GetMapping("find/{name}")
-    public List<Product> findByNameContaining(@PathVariable String name ){return productService.findByNameContaining(name);}
+    public ResponseEntity<?> delete (@PathVariable long id) { return ResponseEntity.ok(productService.delete(id)); }
 
 }

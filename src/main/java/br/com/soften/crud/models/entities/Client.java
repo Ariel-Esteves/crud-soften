@@ -4,6 +4,7 @@ import br.com.soften.crud.models.enums.States;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigInteger;
 
 @Entity
 @Getter
@@ -19,19 +20,19 @@ public class Client implements Serializable {
 	@Column(length=60, nullable=false)
 	private String name;
 
-	@Column(length = 14, nullable = false)
-	private int cpf;
+	@Column(length = 14 ,nullable = false)
+	private String cpf;
 
 	@Column(length=14, nullable=false)
 	private String ie;
 
 	@Column(length=8)
-	private int cep;
+	private String cep;
 
 	@Column(length=60, nullable=false)
 	private String address;
 
-	@Column(length=6)
+	@Column(length=6, nullable = false)
 	private int number;
 
 	@Column(length=60, nullable=false)

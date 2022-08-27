@@ -1,53 +1,44 @@
 package br.com.soften.crud.controller;
 
-import
-		br.com.soften.crud.models.entities.Client;
+import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/client")
 public class ClientController {
 	@Autowired
-	private ClientService clientService;
+	ClientService clientService;
 
-	@GetMapping("find/{id}")
-	public ResponseEntity<?> findById(@PathVariable long id){
-		Client client = clientService.findById(id);
-		return ResponseEntity.ok(client);
+	@GetMapping("findbyid/{id}")
+	public ResponseEntity<?> save(@PathVariable long id){
+		Optional<?> client =clientService.findById(id);
+		return client.isPresent()? ResponseEntity.ok(client) : ResponseEntity.badRequest().build();
 	}
 
-	@PostMapping("/save")
+
+	@PostMapping("save")
 	public ResponseEntity<?> save(@RequestBody Client client){
-		Client save = clientService.save(client);
-		return ResponseEntity.ok(save);
+		Client req = clientService.save(client);
+		return ResponseEntity.ok(req);
 	}
 
-	@PostMapping("/update")
+	@PostMapping("put")
 	public ResponseEntity<?> update(@RequestBody Client client){
-		Client update = clientService.save(client);
-		return ResponseEntity.ok(update);
+		Client req = clientService.save(client);
+		return ResponseEntity.ok(req);
 	}
 
-	@DeleteMapping("/remove/{id}")
-	public ResponseEntity<?> remove(@PathVariable long id){
-		clientService.remove(id);
-		return ResponseEntity.ok("");
-	}
 
-	@GetMapping("/findName/{name}")
-	public ResponseEntity<?> findByName(@PathVariable String name){
-		List<Client> client = clientService.findByName(name);
-		return ResponseEntity.ok(client);
-	}
 
 	@GetMapping("/findall")
 	public ResponseEntity<?> findall(){
-		List<Client> client = clientService.findAll();
-		return ResponseEntity.ok(client);
+		return ResponseEntity.ok(clientService.findAll());
 	}
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> delete (@PathVariable long id) { return ResponseEntity.ok(clientService.delete(id)); }
 }

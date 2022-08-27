@@ -3,8 +3,7 @@ package br.com.soften.crud.models.entities;
 import br.com.soften.crud.models.entities.pk.OrderItemsPk;
 import lombok.*;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -17,47 +16,26 @@ import java.util.Set;
 @Builder
 @Entity
 public class OrderItems implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @EmbeddedId
-    private OrderItemsPk id;
+    @ManyToOne
+    @JoinColumn(name = "client", foreignKey = @ForeignKey(name = "name"))
+    private Client client;
 
-    private double totalValue;
+    //killBill
 
+    @Column(scale = 4, precision = 10, nullable = false)
+    private float amount;
 
+    @Column(scale = 4 , precision = 10, nullable = false)
+    private float unitaryValue;
 
-    public OrderItems(Sales sale, Client client) {
+    @Column(scale = 4 , precision = 10, nullable = false)
+    private float totalValue;;
 
-        id.setSales(sale);
-        id.setClient(client);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItems that = (OrderItems) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public Sales getSales(){
-        return id.getSales();
-    }
-
-    public void setSales( Sales sales){
-        id.setSales(sales);
-    }
-
-    public Client getClient(){
-        return id.getClient();
-    }
-
-    public void setClient(Client client){
-        id.setClient(client);
-    }
-
+    @ManyToOne
+    @JoinColumn
+    private Product product_id;
 }
