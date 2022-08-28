@@ -18,8 +18,8 @@ public class ProductController{
 
     @GetMapping("findbyid/{id}")
     public ResponseEntity<?> save(@PathVariable long id){
-        Optional<?> product =productService.findById(id);
-        return product.isPresent()? ResponseEntity.ok(product) : ResponseEntity.badRequest().build();
+        Product product =productService.findById(id);
+        return product.getName() != "null product" ? ResponseEntity.ok(product) : ResponseEntity.badRequest().build();
     }
 
 
@@ -44,5 +44,8 @@ public class ProductController{
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete (@PathVariable long id) { return ResponseEntity.ok(productService.delete(id)); }
+
+    @GetMapping("/findbyname/{name}")
+    public ResponseEntity<?> findByNameContaining(@PathVariable String name){ return ResponseEntity.ok(productService.findByNameContaining(name));}
 
 }

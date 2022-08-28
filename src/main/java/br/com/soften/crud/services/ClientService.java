@@ -16,18 +16,20 @@ public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	public Client save (Client req){ return clientRepository.save(req) ; }
+	//implementar verificação da existencia do cliente
+	public Client save (Client req){return clientRepository.save(req) ; }
 
-	public Optional<Client> findById(long id){return clientRepository.findById(id); }
+	public Client findById(long id){
+		Optional<Client> find = clientRepository.findById(id);
+		Client result = find.isPresent() ? find.get() : clientRepository.findById(1L).get();
+		return result; }
 
 	public List<Client> findAll(){return clientRepository.findAll();}
 
 	public String delete(long id){
-		Optional<Client> client = findById(id);
-		boolean res = client.isPresent() ? true  : false;
-
-		if(res){
-			clientRepository.delete(client.get());
+		Client client = findById(id);
+		if(client.getName() != "consumidor"){
+			clientRepository.delete(client);
 			return "done";
 		} else {
 			return "not found";

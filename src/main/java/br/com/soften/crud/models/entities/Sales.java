@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -20,7 +21,7 @@ public class Sales implements Serializable {
     private long id;
 
     @Column
-    private double totalValue;
+    private BigDecimal totalValue;
 
     @OneToMany
     @JoinColumn(name = "OrderedItems")

@@ -1,8 +1,11 @@
 package br.com.soften.crud.models.Dto;
 
+import br.com.soften.crud.models.entities.OrderItems;
 import br.com.soften.crud.models.entities.Product;
 import lombok.Data;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 
@@ -10,24 +13,12 @@ import java.util.Set;
 public class SalesDto {
 
 
-    private String client;
 
-    private String product;
+    private long id;
 
-    private float amount;
+    private BigDecimal totalValue;
 
-    private float unitaryValue;
+    private Set<Long> orderedItems;
 
-    private float totalValue;;
 
-    private Set<Long> product_id;
-
-    public SalesDto(String client, String product, float amount, float unitaryValue, Set<Long> product_id) {
-        this.client = client;
-        this.product = product;
-        this.amount = amount;
-        this.unitaryValue = unitaryValue;
-        this.totalValue = amount * unitaryValue;
-        this.product_id = product_id;
-    }
 }

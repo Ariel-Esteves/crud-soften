@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,11 +24,11 @@ public class Product implements Serializable {
     @Column(length = 60, nullable = false)
     private String name;
 
-    @Column(scale = 4, precision = 10, nullable = false, columnDefinition = "Decimal(10,4) default '0.00'")
-    private float costValue;
+    @Column( precision = 10, scale = 4,nullable = false, columnDefinition = "Decimal(10,4) default '0.00'")
+    private BigDecimal costValue;
 
-    @Column(scale = 4, precision = 10, nullable = false)
-    private float saleValue;
+    @Column( precision = 10, scale = 4, nullable = false)
+    private BigDecimal saleValue;
 
 
 }

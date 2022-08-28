@@ -8,26 +8,22 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
 
 @Data
 public class OrderItemsDto {
 
-    private Client client;
+    private long client;
 
     //killBill
 
-    private float amount;
+    private BigDecimal amount;
 
-    private float unitaryValue;
+    private BigDecimal unitaryValue;
 
-    private float totalValue;;
+    private BigDecimal totalValue;;
 
     private long product_id;
 
-    public OrderItemsDto(long client, long product_id) {
 
-        this.unitaryValue = product_id.getSaleValue();
-        this.totalValue = amount * unitaryValue;
-        this.product_id = product_id;
-    }
 }

@@ -15,8 +15,8 @@ public class ClientController {
 
 	@GetMapping("findbyid/{id}")
 	public ResponseEntity<?> save(@PathVariable long id){
-		Optional<?> client =clientService.findById(id);
-		return client.isPresent()? ResponseEntity.ok(client) : ResponseEntity.badRequest().build();
+		Client client =clientService.findById(id);
+		return client.getName() != "consumidor" ? ResponseEntity.ok(client) : ResponseEntity.badRequest().build();
 	}
 
 

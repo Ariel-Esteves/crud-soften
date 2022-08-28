@@ -15,20 +15,15 @@ public class OrderItemsController {
     @Autowired
     OrderItemsService orderItemsService;
 
-    @GetMapping("findbyid/{id}")
-    public ResponseEntity<?> save(@PathVariable long id){
-
-    }
 
 
     @PostMapping("save")
     public ResponseEntity<?> save(@RequestBody OrderItemsDto orderItems){
-        orderItemsService.findById(orderItems.getClient());
+        OrderItems req = orderItemsService.save(orderItems);
         return ResponseEntity.ok(req);
     }
-
     @PostMapping("put")
-    public ResponseEntity<?> update(@RequestBody OrderItems orderItems){
+    public ResponseEntity<?> update(@RequestBody OrderItemsDto orderItems){
         OrderItems req = orderItemsService.save(orderItems);
         return ResponseEntity.ok(req);
     }

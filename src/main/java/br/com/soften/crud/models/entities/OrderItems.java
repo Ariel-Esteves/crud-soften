@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,13 +28,13 @@ public class OrderItems implements Serializable {
     //killBill
 
     @Column(scale = 4, precision = 10, nullable = false)
-    private float amount;
+    private BigDecimal amount;
 
     @Column(scale = 4 , precision = 10, nullable = false)
-    private float unitaryValue;
+    private BigDecimal unitaryValue;
 
     @Column(scale = 4 , precision = 10, nullable = false)
-    private float totalValue;;
+    private BigDecimal totalValue;;
 
     @ManyToOne
     @JoinColumn
