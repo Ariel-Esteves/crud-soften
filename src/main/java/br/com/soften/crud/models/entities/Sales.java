@@ -20,7 +20,7 @@ public class Sales implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal totalValue;
 
     @OneToMany

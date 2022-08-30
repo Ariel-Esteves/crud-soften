@@ -4,7 +4,10 @@ import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +24,7 @@ public class ClientController {
 
 
 	@PostMapping("save")
-	public ResponseEntity<?> save(@RequestBody Client client){
+	public ResponseEntity<?> save(@RequestBody @Valid Client client){
 		Client req = clientService.save(client);
 		return ResponseEntity.ok(req);
 	}

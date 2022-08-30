@@ -24,7 +24,7 @@ public class Product implements Serializable {
     @Column(length = 60, nullable = false)
     private String name;
 
-    @Column( precision = 10, scale = 4,nullable = false, columnDefinition = "Decimal(10,4) default '0.00'")
+    @Column( precision = 10, scale = 4,nullable = false)
     private BigDecimal costValue;
 
     @Column( precision = 10, scale = 4, nullable = false)
