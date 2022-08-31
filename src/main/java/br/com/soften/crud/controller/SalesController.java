@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public class SalesController {
     }
 
     @PostMapping(value="/save")
-    public ResponseEntity<?> save(@RequestBody @Valid SalesDto sales){
+    public ResponseEntity<?> save(@RequestBody  SalesDto sales){
         Sales res = salesService.save(sales);
 
         return ResponseEntity.ok(res);
