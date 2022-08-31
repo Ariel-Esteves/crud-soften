@@ -16,7 +16,7 @@ public class ProductService {
 
     public Product findById(long id){
         Optional<Product> find = productRepository.findById(id);
-        Product result = find.isPresent() ? find.get() : productRepository.findById(1L).get();
+        Product result = find.isPresent() ? find.get() : productRepository.findById(id).get();
         return result; }
 
     public List<Product> findAll(){return productRepository.findAll();}

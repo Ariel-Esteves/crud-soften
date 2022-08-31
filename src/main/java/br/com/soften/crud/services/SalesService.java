@@ -33,7 +33,8 @@ public class SalesService {
         req.getOrderedItems().stream()
                 .forEach(item -> {
                     Optional<OrderItems> result = orderItemsService.findById(item);
-                    order.add(result.get());
+                    order.add(
+                            result.isPresent() ? result.get() : orderItemsService.findById(1l).get() );
 
                    totalValue[0] = totalValue[0].add(new BigDecimal(result.get().getTotalValue().doubleValue()) );
                 });

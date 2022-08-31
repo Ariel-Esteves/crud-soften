@@ -23,14 +23,16 @@ public class Client implements Serializable {
 	@Column(length=60, nullable=false)
 	private String name;
 
-	@Column(length = 14 ,nullable = false)
-	private String cpf;
+	@Max(value = 99999999999999l)
+	@Column(nullable = false)
+	private long cpf;
 
 	@Column(length=14, nullable=false)
 	private String ie;
 
-	@Column(length=8)
-	private String cep;
+	@Max(value = 99999999l)
+	@Column(nullable = false)
+	private long cep;
 
 	@Column(length=60, nullable=false)
 	private String address;

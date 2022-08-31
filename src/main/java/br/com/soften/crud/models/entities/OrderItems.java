@@ -1,13 +1,11 @@
 package br.com.soften.crud.models.entities;
 
-import br.com.soften.crud.models.entities.pk.OrderItemsPk;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
-import java.util.Set;
+
 
 
 @Getter

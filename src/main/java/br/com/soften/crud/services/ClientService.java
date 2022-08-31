@@ -21,7 +21,7 @@ public class ClientService {
 
 	public Client findById(long id){
 		Optional<Client> find = clientRepository.findById(id);
-		Client result = find.isPresent() ? find.get() : clientRepository.findById(1L).get();
+		Client result = find.isPresent() ? find.get() : clientRepository.findById(id).get();
 		return result; }
 
 	public List<Client> findAll(){return clientRepository.findAll();}
