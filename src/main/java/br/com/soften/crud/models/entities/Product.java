@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-public class Product implements Serializable {
+public class Product{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

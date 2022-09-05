@@ -3,7 +3,6 @@ package br.com.soften.crud.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 
 @Entity
-public class Sales implements Serializable {
+public class OrderSale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +22,13 @@ public class Sales implements Serializable {
     @Column(precision = 10, scale = 4)
     private BigDecimal totalValue;
 
-    @OneToMany
-    @JoinColumn(name = "OrderedItems")
-    private Set<OrderItems> orderedItems;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "OrderSalesItems")
+    private Set<OrderSaleItems> OrderSaleItems;
+
+    @ManyToOne
+    @JoinColumn(name = "client")
+    private Client client;
 
 
 }

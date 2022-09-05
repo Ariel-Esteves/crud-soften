@@ -1,4 +1,4 @@
-package br.com.soften.crud.config.validacao;
+package br.com.soften.crud.models.Dto;
 
 import lombok.Builder;
 import lombok.Data;

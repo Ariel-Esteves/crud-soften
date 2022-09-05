@@ -2,12 +2,9 @@ package br.com.soften.crud.models.entities;
 
 import br.com.soften.crud.models.enums.States;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,7 +12,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Client implements Serializable {
+public class Client{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -23,21 +20,18 @@ public class Client implements Serializable {
 	@Column(length=60, nullable=false)
 	private String name;
 
-	@Max(value = 99999999999999l)
 	@Column(nullable = false)
 	private long cpf;
 
 	@Column(length=14, nullable=false)
 	private String ie;
 
-	@Max(value = 99999999l)
 	@Column(nullable = false)
 	private long cep;
 
 	@Column(length=60, nullable=false)
 	private String address;
 
-	@Max(999999)
 	@Column(nullable = false)
 	private int number;
 
@@ -54,6 +48,9 @@ public class Client implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private States state;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "OrderSaleItems")
+	private List<OrderSaleItems> OrderSaleItems;
 
 
 

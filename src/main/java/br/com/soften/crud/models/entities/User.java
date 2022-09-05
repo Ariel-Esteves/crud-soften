@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @Entity
-public class User implements Serializable {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

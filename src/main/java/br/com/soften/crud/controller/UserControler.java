@@ -2,13 +2,18 @@ package br.com.soften.crud.controller;
 
 
 import br.com.soften.crud.models.entities.User;
+import br.com.soften.crud.models.entities.User;
+import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -20,33 +25,23 @@ public class UserControler {
     @Autowired
     UserService userService;
 
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody User data){
+        User cad = userService.save(data);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(data.getId()).toUri();
+        return ResponseEntity.created(uri).body(data);
+    }
+
     @GetMapping("findbyid/{id}")
-    public ResponseEntity<?> save(@PathVariable long id){
-        Optional<?> user =userService.findById(id);
-        return user.isPresent()? ResponseEntity.ok(user) : ResponseEntity.badRequest().build();
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok(obj);
     }
 
-
-    @PostMapping("save")
-    public ResponseEntity<?> save(@RequestBody @Valid User user){
-        User req = userService.save(user);
-        return ResponseEntity.ok(req);
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id){
+        userService.delete(id);
+        return ResponseEntity.ok("User id" + id + "erased");
     }
-
-    @PostMapping("put")
-    public ResponseEntity<?> update(@RequestBody User user){
-        User req = userService.save(user);
-        return ResponseEntity.ok(req);
-    }
-
-
-
-    @GetMapping("/findall")
-    public ResponseEntity<?> findall(){
-        return ResponseEntity.ok(userService.findAll());
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete (@PathVariable long id) { return ResponseEntity.ok(userService.delete(id)); }
 
 }

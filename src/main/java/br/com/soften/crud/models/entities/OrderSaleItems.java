@@ -3,9 +3,8 @@ package br.com.soften.crud.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
-
+import java.util.List;
 
 
 @Getter
@@ -14,16 +13,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-public class OrderItems implements Serializable {
+public class OrderSaleItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @ManyToOne
-    @JoinColumn(name = "client", foreignKey = @ForeignKey(name = "name"))
-    private Client client;
-
-    //killBill
 
     @Column(scale = 4, precision = 10, nullable = false)
     private BigDecimal amount;
@@ -32,9 +25,10 @@ public class OrderItems implements Serializable {
     private BigDecimal unitaryValue;
 
     @Column(scale = 4 , precision = 10, nullable = false)
-    private BigDecimal totalValue;;
+    private BigDecimal totalValue;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "product")
     private Product product_id;
+
 }

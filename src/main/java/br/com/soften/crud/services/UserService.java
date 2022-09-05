@@ -1,4 +1,7 @@
 package br.com.soften.crud.services;
+import br.com.soften.crud.exceptions.ResourceNotFoundException;
+import br.com.soften.crud.models.entities.User;
+import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +15,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User save (User req){ return userRepository.save(req) ; }
+    public User save(User data){ return userRepository.save(data); }
 
-    public Optional<User> findById(long id){return userRepository.findById(id); }
-
-    public List<User> findAll(){return userRepository.findAll();}
-
-    public String delete(long id){
-        Optional<User> user = findById(id);
-        boolean res = user.isPresent() ? true  : false;
-
-        if(res){
-            userRepository.delete(user.get());
-            return "done";
-        } else {
-            return "not found";
-        }
+    public User findById( Long id ){
+        Optional<User> obj = userRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
 
+    public User delete(Long id) {
+        Optional<User> data = userRepository.findById(id);
+        return data.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public List<User> findAll(){return userRepository.findAll();}
 }
