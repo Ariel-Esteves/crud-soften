@@ -10,7 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -40,6 +39,11 @@ public class ProductController{
         return ResponseEntity.ok("Product id" + id + "erased");
     }
 
+    @GetMapping("/findall")
+    public ResponseEntity<?> findAll(){
+        List<Product> data = productService.findAll();
+        return ResponseEntity.ok(data);
+    }
     @GetMapping("findbyname/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name){
         List<Product> obj = productService.findByName(name);

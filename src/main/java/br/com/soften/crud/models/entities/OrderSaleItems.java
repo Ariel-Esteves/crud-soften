@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 
 @Getter
@@ -30,5 +29,7 @@ public class OrderSaleItems {
     @ManyToOne
     @JoinColumn(name = "product")
     private Product product_id;
+
+
 
 }

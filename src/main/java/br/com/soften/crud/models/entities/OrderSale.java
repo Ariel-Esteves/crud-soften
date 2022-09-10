@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -24,7 +25,7 @@ public class OrderSale {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "OrderSalesItems")
-    private Set<OrderSaleItems> OrderSaleItems;
+    private List<OrderSaleItems> OrderSaleItems;
 
     @ManyToOne
     @JoinColumn(name = "client")

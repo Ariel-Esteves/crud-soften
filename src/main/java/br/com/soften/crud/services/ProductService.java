@@ -23,16 +23,12 @@ public class ProductService {
 
     public List<Product> findByName( String data ){
         List<Product> obj = productRepository.findByNameContaining(data);
-        if(obj.size() > 0){
-            return obj;
-        }else{
-            throw new ResourceNotFoundException(obj);
-        }
+        return obj;
     }
 
-    public Product delete(Long id) {
-        Optional<Product> data = productRepository.findById(id);
-        return data.orElseThrow(() -> new ResourceNotFoundException(id));
+    public void delete(Long id) {
+        Product data = this.findById(id);
+        productRepository.delete(data);
     }
 
     public List<Product> findAll(){return productRepository.findAll();}

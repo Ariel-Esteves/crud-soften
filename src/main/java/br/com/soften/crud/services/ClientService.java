@@ -26,16 +26,12 @@ public class ClientService {
 
 	public List<Client> findByName( String data ){
 		List<Client> obj = clientRepository.findByNameContaining(data);
-			if(obj.size() > 0){
-				return obj;
-			}else{
-				throw new ResourceNotFoundException(obj);
-			}
+		return obj;
 				}
 
-	public Client delete(Long id) {
-		Optional<Client> data = clientRepository.findById(id);
-		return data.orElseThrow(() -> new ResourceNotFoundException(id));
+	public void delete(Long id) {
+		Client data =this.findById(id);
+		clientRepository.delete(data);
 	}
 
 	public List<Client> findAll(){return clientRepository.findAll();}

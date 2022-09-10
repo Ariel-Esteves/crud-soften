@@ -3,6 +3,7 @@ import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.models.entities.User;
+import br.com.soften.crud.repositories.ClientRepository;
 import br.com.soften.crud.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ public class UserService {
     }
 
 
-    public User delete(Long id) {
-        Optional<User> data = userRepository.findById(id);
-        return data.orElseThrow(() -> new ResourceNotFoundException(id));
+    public void delete(Long id) {
+        User data = this.findById(id);
+        userRepository.delete(data);
     }
 
     public List<User> findAll(){return userRepository.findAll();}

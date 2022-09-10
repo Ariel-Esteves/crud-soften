@@ -1,5 +1,6 @@
 package br.com.soften.crud.services;
 
+import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.Dto.OrderSaleItemsDto;
 import br.com.soften.crud.models.entities.OrderSaleItems;
 import br.com.soften.crud.models.entities.Product;
@@ -20,29 +21,29 @@ public class OrderSaleItemsService {
     private ProductService productService;
 
     public OrderSaleItems save(OrderSaleItemsDto data){
-        Product prod = productService.findById(data.getProduct_id());
-        data.setUnitaryValue(prod.getSaleValue());
-        OrderSaleItems orderSale = OrderSaleItems.builder()
+        Product product = productService.findById(data.getProduct_id());
+        BigDecimal unitaryValue = data.getUnitaryValue() != null ? data.getUnitaryValue() : product.getSaleValue();
+        return orderSaleItemsRepository.save(
+                OrderSaleItems.builder()
+                .product_id(product)
+                .unitaryValue(product.getSaleValue())
                 .amount(data.getAmount())
-                .unitaryValue(data.getUnitaryValue())
-                .totalValue(data.getTotalValue())
-                .product_id(prod)
-                .build();
-        return orderSaleItemsRepository.save(orderSale);
+                        .totalValue(data.getAmount().multiply(unitaryValue))
+                .build()
+        );
 
     }
 
-    public Optional<OrderSaleItems> findById( long id ){ return orderSaleItemsRepository.findById(id); }
-
-
-    public boolean delete(long id){
+    public OrderSaleItems findById( long id ){
         Optional<OrderSaleItems> data = orderSaleItemsRepository.findById(id);
-        if(data.isPresent()){
-            orderSaleItemsRepository.delete( data.get() );
-            return true;
-        }else{
-            return false;
-        } }
+        return data.orElseThrow(()-> new ResourceNotFoundException(id));
+    }
+
+
+    public void delete(long id){
+        OrderSaleItems data = this.findById(id);
+        orderSaleItemsRepository.delete(data);
+         }
 
     public List<OrderSaleItems> findAll(){return orderSaleItemsRepository.findAll();}
 
