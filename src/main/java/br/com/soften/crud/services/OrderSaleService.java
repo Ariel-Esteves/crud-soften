@@ -1,5 +1,4 @@
 package br.com.soften.crud.services;
-import br.com.soften.crud.exceptions.ArgNullFoundException;
 import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.entities.*;
@@ -32,16 +31,11 @@ public class OrderSaleService {
                .map(e -> e.getTotalValue())
                .reduce((e,acumulator)-> acumulator.add(e));
 
-
-        if(total.isPresent()){
-            return OrderSale.builder()
+            return orderSaleRepository.save(
+                    OrderSale.builder()
                     .OrderSaleItems(items)
                     .totalValue(total.get())
-                    .client(client).build();
-        }else {
-            throw new ArgNullFoundException();
-        }
-
+                    .client(client).build() );
     }
 
     public OrderSale findById( long id ){

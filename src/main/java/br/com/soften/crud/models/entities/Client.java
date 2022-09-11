@@ -48,9 +48,6 @@ public class Client{
 	@Enumerated(EnumType.STRING)
 	private States state;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OrderSaleItems")
-	private List<OrderSaleItems> OrderSaleItems;
 
 
 

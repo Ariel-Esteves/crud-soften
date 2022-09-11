@@ -9,8 +9,6 @@ public class OrderSaleItemsDto {
 
     private BigDecimal amount;
 
-    private BigDecimal unitaryValue;
-
     private long product_id;
 
 }

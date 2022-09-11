@@ -22,13 +22,12 @@ public class OrderSaleItemsService {
 
     public OrderSaleItems save(OrderSaleItemsDto data){
         Product product = productService.findById(data.getProduct_id());
-        BigDecimal unitaryValue = data.getUnitaryValue() != null ? data.getUnitaryValue() : product.getSaleValue();
         return orderSaleItemsRepository.save(
                 OrderSaleItems.builder()
                 .product_id(product)
                 .unitaryValue(product.getSaleValue())
                 .amount(data.getAmount())
-                        .totalValue(data.getAmount().multiply(unitaryValue))
+                        .totalValue(product.getSaleValue().multiply(data.getAmount()))
                 .build()
         );
 
