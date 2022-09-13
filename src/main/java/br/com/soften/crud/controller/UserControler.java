@@ -26,7 +26,7 @@ public class UserControler {
     UserService userService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody User data){
+    public ResponseEntity<?> save(@RequestBody  User data){
         User cad = userService.save(data);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(data.getId()).toUri();
         return ResponseEntity.created(uri).body(data);
@@ -43,5 +43,9 @@ public class UserControler {
         userService.delete(id);
         return ResponseEntity.ok("User id" + id + "erased");
     }
-
+    @GetMapping("/findall")
+    public ResponseEntity<?> findAll(){
+        List<User> userList = userService.findAll();
+        return ResponseEntity.ok(userList);
+    }
 }
