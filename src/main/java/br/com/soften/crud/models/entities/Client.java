@@ -4,7 +4,6 @@ import br.com.soften.crud.models.enums.States;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -13,42 +12,40 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Client{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	@Column(length=60, nullable=false)
-	private String name;
+    @Column(length = 60, nullable = false)
+    private String name;
 
-	@Column(nullable = false)
-	private long cpf;
+    @Column(nullable = false)
+    private long cpf;
 
-	@Column(length=14, nullable=false)
-	private String ie;
+    @Column(length = 14, nullable = false)
+    private String ie;
 
-	@Column(nullable = false)
-	private long cep;
+    @Column(nullable = false)
+    private long cep;
 
-	@Column(length=60, nullable=false)
-	private String address;
+    @Column(length = 60, nullable = false)
+    private String address;
 
-	@Column(nullable = false)
-	private int number;
+    @Column(nullable = false)
+    private int number;
 
-	@Column(length=60, nullable=false)
-	private String district;
+    @Column(length = 60, nullable = false)
+    private String district;
 
-	@Column(length=60)
-	private String complement;
+    @Column(length = 60)
+    private String complement;
 
-	@Column(length=60, nullable=false)
-	private String city;
+    @Column(length = 60, nullable = false)
+    private String city;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private States state;
-
-
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private States state;
 
 
 }

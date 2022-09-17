@@ -6,33 +6,38 @@ import br.com.soften.crud.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
-public class ClientService {
+public class ClientService{
 
-	@Autowired
-	private ClientRepository clientRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
-	public Client save(Client data){ return clientRepository.save(data); }
+    @Autowired
+    public ClientService( ClientRepository clientRepository ){
+        this.clientRepository = clientRepository;
+    }
 
-	public Client findById( Long id ){
-		Optional<Client> obj = clientRepository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
-		}
+    public Client save( Client data ){
+        return clientRepository.save(data);
+    }
 
-	public List<Client> findByName( String data ){
-		List<Client> obj = clientRepository.findByNameContaining(data);
-		return obj;
-				}
+    public Client findById( Long id ){
+        Optional<Client> obj = clientRepository.findById(id);
+        return obj.orElseThrow(( ) -> new ResourceNotFoundException(id));
+    }
 
-	public void delete(Long id) {
-		Client data =this.findById(id);
-		clientRepository.delete(data);
-	}
+    public List<Client> findByName( String data ){
+        return clientRepository.findByNameContaining(data);
+    } // alocou na variável e retornou ela logo depois, podia dar um return direto
 
-	public List<Client> findAll(){return clientRepository.findAll();}
+    public void delete( Long id ){
+        clientRepository.deleteById(id);
+    }
+
+    public List<Client> findAll( ){
+        return clientRepository.findAll();
+    }
 }

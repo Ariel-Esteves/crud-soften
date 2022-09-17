@@ -1,12 +1,13 @@
 package br.com.soften.crud.repositories;
 
 import br.com.soften.crud.models.entities.Client;
-import br.com.soften.crud.models.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ClientRepository extends JpaRepository<Client, Long> {
+@Repository
+public interface ClientRepository extends JpaRepository<Client, Long>{
 
-    public List<Client> findByNameContaining(String name);
+    List<Client> findByNameContaining( String name );
 }

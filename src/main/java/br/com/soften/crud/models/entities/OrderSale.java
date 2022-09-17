@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 
 @Entity
-public class OrderSale {
+public class OrderSale{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,14 @@ public class OrderSale {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "OrderSalesItems")
-    private List<OrderSaleItems> OrderSaleItems;
+    private List<OrderSaleItems> orderSaleItems = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "client")
     private Client client;
 
+    public void setOrderSaleItems( List<OrderSaleItems> items ){
+        this.orderSaleItems.addAll(items);
+    }
 
 }

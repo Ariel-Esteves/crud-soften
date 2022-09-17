@@ -11,19 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
 @ControllerAdvice
-public class ResourceExceptionHandler {
+public class ResourceExceptionHandler{
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<StandardErrorMessage> ResourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
+    public ResponseEntity<StandardErrorMessage> ResourceNotFound( ResourceNotFoundException e, HttpServletRequest request ){
         HttpStatus status = HttpStatus.NOT_FOUND;
         String ErrorMessage = "Content not found";
         StandardErrorMessage err =
                 StandardErrorMessage.builder()
-                .path(request.getServletPath())
-                .error(e.getMessage())
-                .timestamp(Instant.now())
-                .status(status.value())
-                .message(ErrorMessage)
-                .build();
+                        .path(request.getServletPath())
+                        .error(e.getMessage())
+                        .timestamp(Instant.now())
+                        .status(status.value())
+                        .message(ErrorMessage)
+                        .build();
 
         return ResponseEntity.status(status).body(err);
     }

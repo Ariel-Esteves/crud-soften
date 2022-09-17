@@ -15,6 +15,9 @@ spring:
   sql:
     init:
       mode: always
+  rsocket:
+    server:
+      port: 8080
 
 service:
   name: "crud"

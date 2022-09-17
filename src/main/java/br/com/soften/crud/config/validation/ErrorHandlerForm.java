@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class ErrorHandlerForm {
+public class ErrorHandlerForm{
     @Autowired
     private MessageSource messageSource;
 
@@ -23,7 +23,7 @@ public class ErrorHandlerForm {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
 
-    public List<ErrorFormDto> handle(MethodArgumentNotValidException exception) {
+    public List<ErrorFormDto> handle( MethodArgumentNotValidException exception ){
         List<ErrorFormDto> errorList = new ArrayList<>();
         List<FieldError> errors = exception.getBindingResult().getFieldErrors();
 
