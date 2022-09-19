@@ -11,14 +11,10 @@ import java.util.Optional;
 
 @Service
 public class ClientService{
-
+    private final ClientRepository clientRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService(ClientRepository clientRepository){this.clientRepository = clientRepository;}
 
-    @Autowired
-    public ClientService( ClientRepository clientRepository ){
-        this.clientRepository = clientRepository;
-    }
 
     public Client save( Client data ){
         return clientRepository.save(data);
@@ -31,7 +27,7 @@ public class ClientService{
 
     public List<Client> findByName( String data ){
         return clientRepository.findByNameContaining(data);
-    } // alocou na variável e retornou ela logo depois, podia dar um return direto
+    }
 
     public void delete( Long id ){
         clientRepository.deleteById(id);

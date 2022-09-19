@@ -2,7 +2,6 @@ package br.com.soften.crud.controller;
 
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.entities.OrderSale;
-import br.com.soften.crud.services.OrderSaleItemsService;
 import br.com.soften.crud.services.OrderSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/ordersales")
 public class OrderSalesController{
+
+    private final OrderSaleService orderSaleService;
+
     @Autowired
-    private OrderSaleService orderSaleService;
+    public OrderSalesController( OrderSaleService orderSaleService ){
+        this.orderSaleService = orderSaleService;
+    }
 
     @PostMapping("/save")
     public ResponseEntity<?> save( @RequestBody OrderSaleDto item ){

@@ -4,6 +4,7 @@ import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.models.entities.OrderSale;
+import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.repositories.OrderSaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,23 @@ import java.util.Optional;
 @Service
 public class OrderSaleService{
 
+    private final OrderSaleRepository orderSaleRepository;
+    private final ClientService clientService;
+    private final OrderSaleItemsService orderSaleItemsService;
+    private final  UserService userService;
+
     @Autowired
-    private OrderSaleRepository orderSaleRepository;
-    @Autowired
-    private ClientService clientService;
-    @Autowired
-    private OrderSaleItemsService orderSaleItemsService;
+    public OrderSaleService( OrderSaleRepository orderSale, ClientService client, OrderSaleItemsService orderItems, UserService user ){
+        this.orderSaleRepository = orderSale;
+        this.clientService = client;
+        this.orderSaleItemsService = orderItems;
+        this.userService = user;
+    }
 
     public OrderSale save( OrderSaleDto dto ){
+        User user = userService.findById(dto.getUser());
         Client client = clientService.findById(dto.getClient());
-        OrderSale data = dto.toOrderSale(client);
+        OrderSale data = dto.toOrderSale(client, user);
         data.getOrderSaleItems().stream().forEach(orderSaleItemsService::save);
         BigDecimal total =
                 data.getOrderSaleItems().stream()

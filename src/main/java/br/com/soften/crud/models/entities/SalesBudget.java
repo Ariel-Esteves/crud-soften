@@ -7,14 +7,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Getter
+@Setter
 @Entity
-public class OrderSale{
+public class SalesBudget{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +37,4 @@ public class OrderSale{
     public void setOrderSaleItems( List<OrderSaleItems> items ){
         this.orderSaleItems.addAll(items);
     }
-
 }

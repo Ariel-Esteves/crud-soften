@@ -13,8 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/client")
 public class ClientController{
+    private final ClientService clientService;
+
     @Autowired
-    private ClientService clientService;
+    public ClientController( ClientService clientService ){
+        this.clientService = clientService;
+    }
 
     @PostMapping("/save")
     public ResponseEntity<?> save( @RequestBody Client data ){

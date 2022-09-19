@@ -11,8 +11,11 @@ import java.util.Optional;
 
 @Service
 public class UserService{
-    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    public UserService( UserRepository userRepo ){
+        this.userRepository = userRepo;
+    }
 
     public User save( User data ){
         return userRepository.save(data);

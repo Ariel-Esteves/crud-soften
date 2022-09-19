@@ -11,8 +11,14 @@ import java.util.Optional;
 
 @Service
 public class ProductService{
+
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public ProductService( ProductRepository productRepo ){
+        this.productRepository = productRepo;
+    }
+
 
     public Product save( Product data ){
         return productRepository.save(data);

@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/ordersaleitems")
 public class OrderSaleItemsController{
 
+
+    public final OrderSaleItemsService orderItemsService;
+
     @Autowired
-    OrderSaleItemsService orderItemsService;
+    public OrderSaleItemsController( OrderSaleItemsService orderItems ){
+        this.orderItemsService = orderItems;
+    }
 
     @GetMapping("/findall")
     public ResponseEntity<?> findall( ){

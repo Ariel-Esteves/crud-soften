@@ -11,13 +11,11 @@ import java.util.Optional;
 
 @Service
 public class OrderSaleItemsService{
-    @Autowired
-    private OrderSaleItemsRepository orderSaleItemsRepository;
-    @Autowired
-    private ProductService productService;
+    private final OrderSaleItemsRepository orderSaleItemsRepository;
 
-    public OrderSaleItemsService( OrderSaleItemsRepository orderSaleItemsRepository ){
-        this.orderSaleItemsRepository = orderSaleItemsRepository;
+    @Autowired
+    public OrderSaleItemsService( OrderSaleItemsRepository orderItems ){
+        this.orderSaleItemsRepository = orderItems;
     }
 
     public OrderSaleItems save( OrderSaleItems data ){
