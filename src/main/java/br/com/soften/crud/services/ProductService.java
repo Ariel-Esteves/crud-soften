@@ -10,36 +10,35 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService{
+public class ProductService {
 
     private final ProductRepository productRepository;
 
     @Autowired
-    public ProductService( ProductRepository productRepo ){
+    public ProductService(ProductRepository productRepo) {
         this.productRepository = productRepo;
     }
 
 
-    public Product save( Product data ){
+    public Product save(Product data) {
         return productRepository.save(data);
     }
 
-    public Product findById( Long id ){
+    public Product findById(Long id) {
         Optional<Product> obj = productRepository.findById(id);
-        return obj.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public List<Product> findByName( String data ){
+    public List<Product> findByName(String data) {
         List<Product> obj = productRepository.findByNameContaining(data);
         return obj;
     }
 
-    public void delete( Long id ){
-        Product data = this.findById(id);
-        productRepository.delete(data);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 
-    public List<Product> findAll( ){
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 

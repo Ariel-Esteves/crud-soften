@@ -10,29 +10,29 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService{
+public class UserService {
     private UserRepository userRepository;
+
     @Autowired
-    public UserService( UserRepository userRepo ){
+    public UserService(UserRepository userRepo) {
         this.userRepository = userRepo;
     }
 
-    public User save( User data ){
+    public User save(User data) {
         return userRepository.save(data);
     }
 
-    public User findById( Long id ){
+    public User findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
-        return obj.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
 
-    public void delete( Long id ){
-        User data = this.findById(id);
-        userRepository.delete(data);
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
-    public List<User> findAll( ){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 

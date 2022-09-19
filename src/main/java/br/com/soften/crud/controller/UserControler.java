@@ -16,35 +16,35 @@ import java.util.List;
 @Controller
 @RestController
 @RequestMapping("/user")
-public class UserControler{
+public class UserControler {
     private final UserService userService;
 
     @Autowired
-    public UserControler( UserService userService ){
+    public UserControler(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save( @RequestBody User data ){
+    public ResponseEntity<?> save(@RequestBody User data) {
         User cad = userService.save(data);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(data.getId()).toUri();
         return ResponseEntity.created(uri).body(data);
     }
 
     @GetMapping("findbyid/{id}")
-    public ResponseEntity<User> findById( @PathVariable Long id ){
+    public ResponseEntity<User> findById(@PathVariable Long id) {
         User obj = userService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteById( @PathVariable Long id ){
-        userService.delete(id);
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        userService.deleteById(id);
         return ResponseEntity.ok("User id " + id + " erased");
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<?> findAll( ){
+    public ResponseEntity<?> findAll() {
         List<User> userList = userService.findAll();
         return ResponseEntity.ok(userList);
     }

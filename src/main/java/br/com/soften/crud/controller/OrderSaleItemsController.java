@@ -7,24 +7,24 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ordersaleitems")
-public class OrderSaleItemsController{
+public class OrderSaleItemsController {
 
 
     public final OrderSaleItemsService orderItemsService;
 
     @Autowired
-    public OrderSaleItemsController( OrderSaleItemsService orderItems ){
+    public OrderSaleItemsController(OrderSaleItemsService orderItems) {
         this.orderItemsService = orderItems;
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<?> findall( ){
+    public ResponseEntity<?> findall() {
         return ResponseEntity.ok(orderItemsService.findAll());
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete( @PathVariable long id ){
-        orderItemsService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable long id) {
+        orderItemsService.deleteById(id);
         return ResponseEntity.ok("item deleted");
     }
 }

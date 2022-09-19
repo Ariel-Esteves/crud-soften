@@ -3,7 +3,7 @@ VALUES ('Admin', 'Admin', 'Jb123');
 
 
 
-INSERT INTO client(name, cpf, ie, cep, number, state) VALUES ('consumidor', 000000000000, 000000000, 00000000, 000, 'SAO_PAULO', null);
+INSERT INTO client(name, cpf, ie, cep, address, number, district, complement, city, state) VALUES ('consumidor', 000000000000, '000000000', 00000000,'josé bonifacio', 000, 'St terezinha', 'casa', 'jb', 'SAO_PAULO');
 
 /* INSERT INTO order_sale_items( total_value) VALUES (0);
 

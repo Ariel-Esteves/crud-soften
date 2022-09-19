@@ -14,22 +14,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderSaleService{
+public class OrderSaleService {
 
     private final OrderSaleRepository orderSaleRepository;
     private final ClientService clientService;
     private final OrderSaleItemsService orderSaleItemsService;
-    private final  UserService userService;
+    private final UserService userService;
 
     @Autowired
-    public OrderSaleService( OrderSaleRepository orderSale, ClientService client, OrderSaleItemsService orderItems, UserService user ){
+    public OrderSaleService(OrderSaleRepository orderSale, ClientService client, OrderSaleItemsService orderItems, UserService user) {
         this.orderSaleRepository = orderSale;
         this.clientService = client;
         this.orderSaleItemsService = orderItems;
         this.userService = user;
     }
 
-    public OrderSale save( OrderSaleDto dto ){
+    public OrderSale save(OrderSaleDto dto) {
         User user = userService.findById(dto.getUser());
         Client client = clientService.findById(dto.getClient());
         OrderSale data = dto.toOrderSale(client, user);
@@ -37,23 +37,34 @@ public class OrderSaleService{
         BigDecimal total =
                 data.getOrderSaleItems().stream()
                         .map(e -> e.getTotalValue())
-                        .reduce(( accumulator, element ) -> accumulator.add(element)).get();
+                        .reduce((accumulator, element) -> accumulator.add(element)).get();
 
         data.setTotalValue(total);
         return orderSaleRepository.save(data);
     }
 
-    public OrderSale findById( long id ){
+    public OrderSale save(OrderSale sale) {
+
+        BigDecimal total =
+                sale.getOrderSaleItems().stream().map(e -> e.getTotalValue())
+                        .reduce((acumulator, element) -> acumulator.add(element))
+                        .orElseThrow(() -> new ResourceNotFoundException("total is null"));
+
+        sale.setTotalValue(total);
+
+        return orderSaleRepository.save(sale);
+    }
+
+    public OrderSale findById(long id) {
         Optional<OrderSale> data = orderSaleRepository.findById(id);
-        return data.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return data.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void delete( long id ){
-        OrderSale data = this.findById(id);
-        orderSaleRepository.delete(data);
+    public void deleteById(long id) {
+        orderSaleRepository.deleteById(id);
     }
 
-    public List<OrderSale> findAll( ){
+    public List<OrderSale> findAll() {
         return orderSaleRepository.findAll();
     }
 

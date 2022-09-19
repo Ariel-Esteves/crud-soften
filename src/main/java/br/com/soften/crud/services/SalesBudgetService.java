@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SalesBudgetService{
+public class SalesBudgetService {
 
     private final OrderSaleService orderSaleService;
     private final ClientService clientService;
@@ -25,7 +25,7 @@ public class SalesBudgetService{
     private final SalesBudgetRepository salesBudgetRepository;
 
     @Autowired
-    public SalesBudgetService( OrderSaleService orderSale, ClientService client, OrderSaleItemsService orderItems, UserService user, SalesBudgetRepository salesBudget ){
+    public SalesBudgetService(OrderSaleService orderSale, ClientService client, OrderSaleItemsService orderItems, UserService user, SalesBudgetRepository salesBudget) {
         this.orderSaleService = orderSale;
         this.clientService = client;
         this.orderSaleItemsService = orderItems;
@@ -33,7 +33,7 @@ public class SalesBudgetService{
         this.salesBudgetRepository = salesBudget;
     }
 
-    public SalesBudget save( SalesBudgetDto dto ){
+    public SalesBudget save(SalesBudgetDto dto) {
         Client client = dto.getClient() == null ? clientService.findById(1L) : clientService.findById(dto.getClient());
         User user = userService.findById(dto.getUser());
         SalesBudget data = dto.toBudget(client, user);
@@ -41,37 +41,43 @@ public class SalesBudgetService{
         BigDecimal total =
                 data.getOrderSaleItems().stream()
                         .map(e -> e.getTotalValue())
-                        .reduce(( accumulator, element ) -> accumulator.add(element)).get();
+                        .reduce((accumulator, element) -> accumulator.add(element)).get();
 
         data.setTotalValue(total);
         return salesBudgetRepository.save(data);
     }
 
-    public OrderSale TransformIntoSale( long id ){
+    public OrderSale TransformIntoSale(long id) {
         Optional<SalesBudget> data = salesBudgetRepository.findById(id);
-        if (data.isPresent()) {
-            SalesBudget temp = data.get();
-            return orderSaleService.save(OrderSale.builder()
-                    .orderSaleItems(temp.getOrderSaleItems())
-                    .totalValue(temp.getTotalValue())
-                    .client(temp.getClient())
-                    .id(temp.getId())
-                    .user(temp.getUser())
-                    .build());
+        SalesBudget temp = data.get();
+        OrderSale sale = OrderSale.builder()
+                .orderSaleItems(temp.getOrderSaleItems())
+                .totalValue(temp.getTotalValue())
+                .client(temp.getClient())
+                .id(temp.getId())
+                .user(temp.getUser())
+                .build();
+        if (data.isPresent() & (sale.getClient() != null)) {
+            Client consumidor = clientService.findById(1L);
+            sale.setClient(consumidor);
+            return orderSaleService.save(sale);
+        } else {
+
+            return orderSaleService.save(sale);
         }
+
     }
 
-    public SalesBudget findById( long id ){
+    public SalesBudget findById(long id) {
         Optional<SalesBudget> data = salesBudgetRepository.findById(id);
-        return data.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return data.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void delete( long id ){
-        SalesBudget data = this.findById(id);
-        salesBudgetRepository.delete(data);
+    public void deleteById(long id) {
+        salesBudgetRepository.deleteById(id);
     }
 
-    public List<SalesBudget> findAll( ){
+    public List<SalesBudget> findAll() {
         return salesBudgetRepository.findAll();
     }
 

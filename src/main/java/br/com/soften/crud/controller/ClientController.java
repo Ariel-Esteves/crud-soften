@@ -12,35 +12,35 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/client")
-public class ClientController{
+public class ClientController {
     private final ClientService clientService;
 
     @Autowired
-    public ClientController( ClientService clientService ){
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save( @RequestBody Client data ){
+    public ResponseEntity<?> save(@RequestBody Client data) {
         Client cad = clientService.save(data);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(data.getId()).toUri();
         return ResponseEntity.created(uri).body(cad);
     }
 
     @GetMapping("findbyid/{id}")
-    public ResponseEntity<Client> findById( @PathVariable Long id ){
+    public ResponseEntity<Client> findById(@PathVariable Long id) {
         Client obj = clientService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteById( @PathVariable Long id ){
-        clientService.delete(id);
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        clientService.deleteById(id);
         return ResponseEntity.ok("Client id " + id + " erased");
     }
 
     @GetMapping("findbyname/{name}")
-    public ResponseEntity<?> findByName( @PathVariable String name ){
+    public ResponseEntity<?> findByName(@PathVariable String name) {
         List<Client> obj = clientService.findByName(name);
         return ResponseEntity.ok(obj);
     }

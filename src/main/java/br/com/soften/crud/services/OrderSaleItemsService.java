@@ -10,29 +10,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderSaleItemsService{
+public class OrderSaleItemsService {
     private final OrderSaleItemsRepository orderSaleItemsRepository;
 
     @Autowired
-    public OrderSaleItemsService( OrderSaleItemsRepository orderItems ){
+    public OrderSaleItemsService(OrderSaleItemsRepository orderItems) {
         this.orderSaleItemsRepository = orderItems;
     }
 
-    public OrderSaleItems save( OrderSaleItems data ){
+    public OrderSaleItems save(OrderSaleItems data) {
         return orderSaleItemsRepository.save(data);
     }
 
-    public OrderSaleItems findById( long id ){
+    public OrderSaleItems findById(long id) {
         Optional<OrderSaleItems> data = orderSaleItemsRepository.findById(id);
-        return data.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return data.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void delete( long id ){
-        OrderSaleItems data = this.findById(id);
-        orderSaleItemsRepository.delete(data);
+    public void deleteById(long id) {
+        orderSaleItemsRepository.deleteById(id);
     }
 
-    public List<OrderSaleItems> findAll( ){
+    public List<OrderSaleItems> findAll() {
         return orderSaleItemsRepository.findAll();
     }
 }

@@ -10,30 +10,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClientService{
+public class ClientService {
     private final ClientRepository clientRepository;
+
     @Autowired
-    private ClientService(ClientRepository clientRepository){this.clientRepository = clientRepository;}
+    private ClientService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
 
 
-    public Client save( Client data ){
+    public Client save(Client data) {
         return clientRepository.save(data);
     }
 
-    public Client findById( Long id ){
+    public Client findById(Long id) {
         Optional<Client> obj = clientRepository.findById(id);
-        return obj.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public List<Client> findByName( String data ){
+    public List<Client> findByName(String data) {
         return clientRepository.findByNameContaining(data);
     }
 
-    public void delete( Long id ){
+    public void deleteById(Long id) {
         clientRepository.deleteById(id);
     }
 
-    public List<Client> findAll( ){
+    public List<Client> findAll() {
         return clientRepository.findAll();
     }
 }

@@ -13,43 +13,43 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
-public class ProductController{
+public class ProductController {
 
 
     private final ProductService productService;
 
     @Autowired
-    public ProductController( ProductService productService ){
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save( @RequestBody Product data ){
+    public ResponseEntity<?> save(@RequestBody Product data) {
         Product cad = productService.save(data);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(cad.getId()).toUri();
         return ResponseEntity.created(uri).body(cad);
     }
 
     @GetMapping("findbyid/{id}")
-    public ResponseEntity<Product> findById( @PathVariable Long id ){
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
         Product obj = productService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteById( @PathVariable Long id ){
-        productService.delete(id);
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        productService.deleteById(id);
         return ResponseEntity.ok("Product id " + id + " erased");
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<?> findAll( ){
+    public ResponseEntity<?> findAll() {
         List<Product> data = productService.findAll();
         return ResponseEntity.ok(data);
     }
 
     @GetMapping("findbyname/{name}")
-    public ResponseEntity<?> findByName( @PathVariable String name ){
+    public ResponseEntity<?> findByName(@PathVariable String name) {
         List<Product> obj = productService.findByName(name);
         return ResponseEntity.ok(obj);
     }
