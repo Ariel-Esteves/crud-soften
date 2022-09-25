@@ -2,6 +2,7 @@ package br.com.soften.crud.controller;
 
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.entities.OrderSale;
+import br.com.soften.crud.models.entities.SalesBudget;
 import br.com.soften.crud.services.OrderSaleService;
 import br.com.soften.crud.services.SalesBudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,44 +15,38 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ordersales")
-public class OrderSalesController {
+public class SalesBudgetControler{
 
     private final OrderSaleService orderSaleService;
     private final SalesBudgetService salesBudgetService;
 
     @Autowired
-    public OrderSalesController(OrderSaleService orderSaleService, SalesBudgetService salesBudget) {
+    public SalesBudgetControler( OrderSaleService orderSaleService, SalesBudgetService salesBudget) {
         this.orderSaleService = orderSaleService;
         this.salesBudgetService = salesBudget;
     }
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody OrderSaleDto item) {
-        OrderSale data = orderSaleService.save(item);
+        SalesBudget data = salesBudgetService.save(item);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(data.getId()).toUri();
         return ResponseEntity.created(uri).body(data);
     }
 
     @RequestMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        OrderSale sales = orderSaleService.findById(id);
+       SalesBudget sales = salesBudgetService.findById(id);
         return ResponseEntity.ok(sales);
-    }
-
-    @PostMapping("/TransformIntoSale")
-    public ResponseEntity<?> importBudget( @PathVariable Long id ){
-        OrderSale budget = orderSaleService.ImportBudget(id);
-        return ResponseEntity.ok(budget);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable Long id) {
-        orderSaleService.delete(id);
+        salesBudgetService.delete(id);
     }
 
     @RequestMapping("/findall")
     public ResponseEntity<?> findAll() {
-        List<OrderSale> res = orderSaleService.findAll();
+        List<SalesBudget> res = salesBudgetService.findAll();
         return ResponseEntity.ok(res);
     }
 

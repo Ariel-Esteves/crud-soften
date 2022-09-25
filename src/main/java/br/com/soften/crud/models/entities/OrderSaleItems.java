@@ -17,6 +17,10 @@ public class OrderSaleItems{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name = "product", referencedColumnName = "name")
+    private Product product;
+
     @Column(scale = 4, precision = 10, nullable = false)
     private BigDecimal amount;
 
@@ -26,11 +30,4 @@ public class OrderSaleItems{
     @Column(scale = 4, precision = 10, nullable = false)
     private BigDecimal totalValue;
 
-    @ManyToOne
-    @JoinColumn(name = "product")
-    private Product product;
-
-    public BigDecimal getTotalValue( ){
-        return amount.multiply(unitaryValue);
-    }
 }

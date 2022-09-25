@@ -1,11 +1,11 @@
 package br.com.soften.crud.services;
 
-import br.com.soften.crud.exceptions.ResourceNotFoundException;
-import br.com.soften.crud.models.Dto.SalesBudgetDto;
-import br.com.soften.crud.models.entities.Client;
-import br.com.soften.crud.models.entities.OrderSale;
-import br.com.soften.crud.models.entities.SalesBudget;
-import br.com.soften.crud.models.entities.User;
+import br.com.soften.crud.exceptions.ResourceNotFoundException;;
+import br.com.soften.crud.models.Dto.OrderSaleDto;
+import br.com.soften.crud.models.Dto.OrderSaleItemsDto;
+import br.com.soften.crud.models.entities.*;
+import br.com.soften.crud.repositories.OrderSaleItemsRepository;
+import br.com.soften.crud.repositories.OrderSaleRepository;
 import br.com.soften.crud.repositories.SalesBudgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,72 +13,81 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SalesBudgetService {
 
-    private final OrderSaleService orderSaleService;
+
+    private final OrderSaleRepository orderSaleRepository;
+    private final OrderSaleItemsRepository orderSaleItemsRepository;
     private final ClientService clientService;
-    private final OrderSaleItemsService orderSaleItemsService;
     private final UserService userService;
-
+    private final ProductService productService;
     private final SalesBudgetRepository salesBudgetRepository;
-
     @Autowired
-    public SalesBudgetService(OrderSaleService orderSale, ClientService client, OrderSaleItemsService orderItems, UserService user, SalesBudgetRepository salesBudget) {
-        this.orderSaleService = orderSale;
+    public SalesBudgetService( OrderSaleRepository orderSale, ClientService client, UserService user, OrderSaleItemsRepository orderItems, ProductService product, SalesBudgetRepository salesBudget){
+        this.orderSaleRepository = orderSale;
         this.clientService = client;
-        this.orderSaleItemsService = orderItems;
         this.userService = user;
+        this.orderSaleItemsRepository = orderItems;
+        this.productService = product;
         this.salesBudgetRepository = salesBudget;
     }
 
-    public SalesBudget save(SalesBudgetDto dto) {
-        Client client = dto.getClient() == null ? clientService.findById(1L) : clientService.findById(dto.getClient());
-        User user = userService.findById(dto.getUser());
-        SalesBudget data = dto.toBudget(client, user);
-        data.getOrderSaleItems().stream().forEach(orderSaleItemsService::save);
-        BigDecimal total =
-                data.getOrderSaleItems().stream()
-                        .map(e -> e.getTotalValue())
-                        .reduce((accumulator, element) -> accumulator.add(element)).get();
+    public SalesBudget save( OrderSaleDto saleDto ){
+        Client client = clientService.findById(saleDto.getClient());
+        User user = userService.findById(saleDto.getUser());
+        List<OrderSaleItemsDto> items = saleDto.getOrderSaleItems();
+        items.stream().filter(e -> e.getUnitaryValue() == null).forEach(e -> {
+            e.setUnitaryValue(
+                    productService.findById(e.getProduct()).getSaleValue()
+            );
+        });
+        items.stream().forEach(e -> e.setTotalValue(e.getUnitaryValue().multiply(e.getAmount())));
+        BigDecimal total = items.stream().map(a -> a.getTotalValue()).reduce(( a, e ) -> a.add(e)).get();
+        List<OrderSaleItems> orderSaleItems =
+                items.stream().map(e -> {
+                    Product product = productService.findById(e.getProduct());
+                    OrderSaleItems orderedItems =
+                            OrderSaleItems.builder()
+                                    .amount(e.getAmount())
+                                    .unitaryValue(e.getUnitaryValue())
+                                    .product(product)
+                                    .totalValue(total)
+                                    .build();
+                    orderSaleItemsRepository.save(orderedItems);
+                    return orderedItems;
+                }).collect(Collectors.toList());
 
-        data.setTotalValue(total);
-        return salesBudgetRepository.save(data);
-    }
 
-    public OrderSale TransformIntoSale(long id) {
-        Optional<SalesBudget> data = salesBudgetRepository.findById(id);
-        SalesBudget temp = data.get();
-        OrderSale sale = OrderSale.builder()
-                .orderSaleItems(temp.getOrderSaleItems())
-                .totalValue(temp.getTotalValue())
-                .client(temp.getClient())
-                .id(temp.getId())
-                .user(temp.getUser())
-                .build();
-        if (data.isPresent() & (sale.getClient() != null)) {
-            Client consumidor = clientService.findById(1L);
-            sale.setClient(consumidor);
-            return orderSaleService.save(sale);
-        } else {
-
-            return orderSaleService.save(sale);
+        SalesBudget sale =
+                SalesBudget.builder()
+                        .orderSaleItems(orderSaleItems)
+                        .totalValue(total)
+                        .user(user)
+                        .client(client)
+                        .build();
+        if (saleDto.getId() != null) {
+            sale.setId(saleDto.getId());
+            return salesBudgetRepository.save(sale);
         }
-
+        return salesBudgetRepository.save(sale);
     }
 
-    public SalesBudget findById(long id) {
+    public SalesBudget findById( long id ){
         Optional<SalesBudget> data = salesBudgetRepository.findById(id);
-        return data.orElseThrow(() -> new ResourceNotFoundException(id));
+        return data.orElseThrow(( ) -> new ResourceNotFoundException(id));
     }
 
-    public void deleteById(long id) {
+    public void delete( long id ){
         salesBudgetRepository.deleteById(id);
     }
 
-    public List<SalesBudget> findAll() {
+    public List<SalesBudget> findAll( ){
         return salesBudgetRepository.findAll();
     }
 
-}
+    }
+
+

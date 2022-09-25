@@ -25,8 +25,8 @@ public class ProductService {
     }
 
     public Product findById(Long id) {
-        Optional<Product> obj = productRepository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+        Product obj = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+        return obj;
     }
 
     public List<Product> findByName(String data) {

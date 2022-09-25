@@ -47,5 +47,8 @@ public class Client{
     @Enumerated(EnumType.STRING)
     private States state;
 
+    @JoinColumn(nullable = false)
+    @ManyToOne()
+    private User user;
 
 }

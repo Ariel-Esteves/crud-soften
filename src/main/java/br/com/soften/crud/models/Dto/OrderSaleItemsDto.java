@@ -1,14 +1,25 @@
 package br.com.soften.crud.models.Dto;
 
-import lombok.Data;
+import br.com.soften.crud.models.entities.Product;
+import lombok.*;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Data
-public class OrderSaleItemsDto {
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderSaleItemsDto{
+
+    private Long id;
+
+    private Long product;
 
     private BigDecimal amount;
 
-    private Long product_id;
+    private BigDecimal unitaryValue;
 
+    private BigDecimal totalValue;
 }

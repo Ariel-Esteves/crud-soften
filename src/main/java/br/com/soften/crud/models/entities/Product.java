@@ -26,5 +26,7 @@ public class Product{
     @Column(precision = 10, scale = 4, nullable = false)
     private BigDecimal saleValue;
 
-
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private User user;
 }
