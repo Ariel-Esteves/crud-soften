@@ -18,7 +18,7 @@ public class OrderSaleItems{
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "product", referencedColumnName = "name")
+    @JoinColumn(name = "product")
     private Product product;
 
     @Column(scale = 4, precision = 10, nullable = false)

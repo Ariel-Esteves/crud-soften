@@ -23,9 +23,9 @@ public class OrderSale{
     @Column(precision = 10, scale = 4)
     private BigDecimal totalValue;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OrderSalesItems")
-    private List<OrderSaleItems> orderSaleItems = new ArrayList<>();
+    @OneToMany()
+    @JoinColumn(name = "order_sale")
+    private List<OrderSaleItems> orderSaleItems;
 
     @ManyToOne
     @JoinColumn(name = "client")
@@ -35,8 +35,5 @@ public class OrderSale{
     @JoinColumn(name = "user")
     private User user;
 
-    public void setOrderSaleItems( List<OrderSaleItems> items ){
-        this.orderSaleItems.addAll(items);
-    }
 
 }

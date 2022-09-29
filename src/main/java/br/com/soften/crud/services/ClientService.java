@@ -2,6 +2,7 @@ package br.com.soften.crud.services;
 
 import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.entities.Client;
+import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,21 +13,29 @@ import java.util.Optional;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
+    private final UserService userService;
 
     @Autowired
-    private ClientService(ClientRepository clientRepository) {
+    private ClientService(ClientRepository clientRepository, UserService userService) {
         this.clientRepository = clientRepository;
+        this.userService = userService;
     }
 
 
-    public Client save(Client data) {
+    public Client save(Client data, long user_id) {
+        User user = userService.findById(user_id);
+        data.setUser(user);
         return clientRepository.save(data);
     }
 
-    public Client findById(Long id) {
-        Optional<Client> obj = clientRepository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    public Client find(Long id) {
+        return clientRepository.findById(id).orElse(null);
     }
+
+    public List<Client> find(String name) {
+        return clientRepository.findByNameContaining(name);
+    }
+
 
     public List<Client> findByName(String data) {
         return clientRepository.findByNameContaining(data);

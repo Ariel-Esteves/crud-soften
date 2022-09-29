@@ -38,15 +38,16 @@ public class OrderSalesController {
         return ResponseEntity.ok(sales);
     }
 
-    @PostMapping("/TransformIntoSale")
+    @PostMapping("/TransformIntoSale/{id}")
     public ResponseEntity<?> importBudget( @PathVariable Long id ){
         OrderSale budget = orderSaleService.ImportBudget(id);
         return ResponseEntity.ok(budget);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         orderSaleService.delete(id);
+        return ResponseEntity.status(202).body("item " + id + " erased");
     }
 
     @RequestMapping("/findall")

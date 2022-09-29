@@ -1,7 +1,6 @@
 package br.com.soften.crud.controller;
 
 import br.com.soften.crud.models.Dto.OrderSaleDto;
-import br.com.soften.crud.models.entities.OrderSale;
 import br.com.soften.crud.models.entities.SalesBudget;
 import br.com.soften.crud.services.OrderSaleService;
 import br.com.soften.crud.services.SalesBudgetService;
@@ -14,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ordersales")
+@RequestMapping("/salesBudget")
 public class SalesBudgetControler{
 
     private final OrderSaleService orderSaleService;

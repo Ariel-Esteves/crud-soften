@@ -2,15 +2,13 @@ package br.com.soften.crud;
 
 import br.com.soften.crud.controller.OrderSalesController;
 import br.com.soften.crud.models.entities.Client;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
-
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 @DataJpaTest // is used to run jpa with our test
 class CrudApplicationTests{

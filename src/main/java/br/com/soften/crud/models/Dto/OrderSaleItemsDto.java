@@ -1,9 +1,7 @@
 package br.com.soften.crud.models.Dto;
 
-import br.com.soften.crud.models.entities.Product;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Builder

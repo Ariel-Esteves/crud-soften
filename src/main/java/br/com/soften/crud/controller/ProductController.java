@@ -1,5 +1,6 @@
 package br.com.soften.crud.controller;
 
+import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.models.entities.Product;
 import br.com.soften.crud.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,10 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody Product data) {
-        Product cad = productService.save(data);
+    public ResponseEntity<?> save(@RequestBody Product data, @RequestParam long user) {
+        Product cad = productService.save(data, user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(cad.getId()).toUri();
         return ResponseEntity.created(uri).body(cad);
-    }
-
-    @GetMapping("findbyid/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id) {
-        Product obj = productService.findById(id);
-        return ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("delete/{id}")
@@ -48,9 +43,14 @@ public class ProductController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("findbyname/{name}")
-    public ResponseEntity<?> findByName(@PathVariable String name) {
-        List<Product> obj = productService.findByName(name);
-        return ResponseEntity.ok(obj);
+    @GetMapping("/find")
+    public ResponseEntity<?> find(@RequestParam(required = false) Long id, @RequestParam(required = false) String name) {
+        if (id != null) {
+            Product obj = productService.find(id);
+            return ResponseEntity.ok(obj);
+        } else {
+            List<Product> obj = productService.find(name);
+            return ResponseEntity.ok(obj);
+        }
     }
 }

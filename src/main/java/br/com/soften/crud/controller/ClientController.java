@@ -21,16 +21,22 @@ public class ClientController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody Client data) {
-        Client cad = clientService.save(data);
+    public ResponseEntity<?> save(@RequestBody Client data, @RequestParam long user) {
+        Client cad = clientService.save(data, user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save").buildAndExpand(data.getId()).toUri();
         return ResponseEntity.created(uri).body(cad);
     }
 
-    @GetMapping("findbyid/{id}")
-    public ResponseEntity<Client> findById(@PathVariable Long id) {
-        Client obj = clientService.findById(id);
-        return ResponseEntity.ok(obj);
+    @GetMapping("/find")
+    public ResponseEntity<?> find(@RequestParam(required = false) Long id, @RequestParam(required = false) String name) {
+        if (id != null) {
+            Client obj = clientService.find(id);
+            return ResponseEntity.ok(obj);
+        } else if(name != null) {
+            List<Client> obj = clientService.find(name);
+            return ResponseEntity.ok(obj);
+        }
+        return ResponseEntity.badRequest().body("not found");
     }
 
     @DeleteMapping("delete/{id}")
@@ -43,5 +49,10 @@ public class ClientController {
     public ResponseEntity<?> findByName(@PathVariable String name) {
         List<Client> obj = clientService.findByName(name);
         return ResponseEntity.ok(obj);
+    }
+
+    @GetMapping("/findall")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(clientService.findAll());
     }
 }

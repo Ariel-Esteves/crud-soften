@@ -1,6 +1,6 @@
 package br.com.soften.crud.services;
 
-import br.com.soften.crud.exceptions.ResourceNotFoundException;;
+import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.Dto.OrderSaleItemsDto;
 import br.com.soften.crud.models.entities.*;
@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+;
 
 @Service
 public class SalesBudgetService {
@@ -36,19 +38,19 @@ public class SalesBudgetService {
     }
 
     public SalesBudget save( OrderSaleDto saleDto ){
-        Client client = clientService.findById(saleDto.getClient());
+        Client client = clientService.find(saleDto.getClient());
         User user = userService.findById(saleDto.getUser());
         List<OrderSaleItemsDto> items = saleDto.getOrderSaleItems();
         items.stream().filter(e -> e.getUnitaryValue() == null).forEach(e -> {
             e.setUnitaryValue(
-                    productService.findById(e.getProduct()).getSaleValue()
+                    productService.find(e.getProduct()).getSaleValue()
             );
         });
         items.stream().forEach(e -> e.setTotalValue(e.getUnitaryValue().multiply(e.getAmount())));
         BigDecimal total = items.stream().map(a -> a.getTotalValue()).reduce(( a, e ) -> a.add(e)).get();
         List<OrderSaleItems> orderSaleItems =
                 items.stream().map(e -> {
-                    Product product = productService.findById(e.getProduct());
+                    Product product = productService.find(e.getProduct());
                     OrderSaleItems orderedItems =
                             OrderSaleItems.builder()
                                     .amount(e.getAmount())
