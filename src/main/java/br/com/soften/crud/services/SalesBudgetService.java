@@ -3,6 +3,7 @@ package br.com.soften.crud.services;
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.Dto.OrderSaleItemsDto;
 import br.com.soften.crud.models.entities.*;
+import br.com.soften.crud.repositories.BudgetItemsRepository;
 import br.com.soften.crud.repositories.OrderSaleItemsRepository;
 import br.com.soften.crud.repositories.OrderSaleRepository;
 import br.com.soften.crud.repositories.SalesBudgetRepository;
@@ -26,14 +27,16 @@ public class SalesBudgetService {
     private final UserService userService;
     private final ProductService productService;
     private final SalesBudgetRepository salesBudgetRepository;
+    private final BudgetItemsRepository budgetItemsRepository;
     @Autowired
-    public SalesBudgetService( OrderSaleRepository orderSale, ClientService client, UserService user, OrderSaleItemsRepository orderItems, ProductService product, SalesBudgetRepository salesBudget){
+    public SalesBudgetService( OrderSaleRepository orderSale, ClientService client, UserService user, OrderSaleItemsRepository orderItems, ProductService product, SalesBudgetRepository salesBudget, BudgetItemsRepository budgetItemsRepository){
         this.orderSaleRepository = orderSale;
         this.clientService = client;
         this.userService = user;
         this.orderSaleItemsRepository = orderItems;
         this.productService = product;
         this.salesBudgetRepository = salesBudget;
+        this.budgetItemsRepository = budgetItemsRepository;
     }
 
 
@@ -48,24 +51,23 @@ public class SalesBudgetService {
         });
         items.stream().forEach(e -> e.setTotalValue(e.getUnitaryValue().multiply(e.getAmount())));
         BigDecimal total = items.stream().map(a -> a.getTotalValue()).reduce(( a, e ) -> a.add(e)).get();
-        List<OrderSaleItems> orderSaleItems =
+        List<BudgetItems> budgetItems =
                 items.stream().map(e -> {
                     Product product = productService.find(e.getProduct());
-                    OrderSaleItems orderedItems =
-                            OrderSaleItems.builder()
+                    BudgetItems orderedItems =
+                            BudgetItems.builder()
                                     .amount(e.getAmount())
                                     .unitaryValue(e.getUnitaryValue())
                                     .product(product)
                                     .totalValue(total)
                                     .build();
-                    orderSaleItemsRepository.save(orderedItems);
+                    budgetItemsRepository.save(orderedItems);
                     return orderedItems;
                 }).collect(Collectors.toList());
 
 
         SalesBudget sale =
-                SalesBudget.builder()
-                        .orderSaleItems(orderSaleItems)
+                SalesBudget.builder() .budgetItems(budgetItems)
                         .totalValue(total)
                         .user(user)
                         .client(client)

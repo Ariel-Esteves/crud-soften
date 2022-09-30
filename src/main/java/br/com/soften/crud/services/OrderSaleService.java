@@ -78,16 +78,8 @@ public class OrderSaleService {
     }
 
     public OrderSale ImportBudget(long id) {
-        SalesBudget budget = salesBudgetService.findById(id);
-        budget.getOrderSaleItems().stream()
-        OrderSale orderSale =
-                OrderSale.builder()
-                        .client(budget.getClient())
-                        .orderSaleItems()
-                        .totalValue(budget.getTotalValue())
-                        .user(budget.getUser())
-                        .build();
-        return orderSaleRepository.save(orderSale);
+        OrderSale sale = orderSaleRepository.findById(id).orElse(null);
+        sale.getOrderSaleItems().stream().forEach(e -> );
     }
 
     public OrderSale findById(long id) {

@@ -23,8 +23,8 @@ public class SalesBudget{
     private BigDecimal totalValue;
 
     @OneToMany()
-    @JoinColumn(name = "sale_budget")
-    private List<OrderSaleItems> orderSaleItems;
+    @JoinColumn(name = "budget_items")
+    private List<BudgetItems> budgetItems;
 
     @ManyToOne
     @JoinColumn(name = "client")
