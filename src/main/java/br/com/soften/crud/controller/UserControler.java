@@ -31,21 +31,21 @@ public class UserControler {
         return ResponseEntity.created(uri).body(data);
     }
 
-    @GetMapping("findbyid/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User obj = userService.findById(id);
-        return ResponseEntity.ok(obj);
+    @GetMapping("find/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        if(id == null){
+            User obj = userService.find(id);
+            return ResponseEntity.ok(obj);
+        }else{
+            List<User> all = userService.find();
+            return ResponseEntity.ok(all);
+        }
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
-        userService.deleteById(id);
-        return ResponseEntity.ok("User id " + id + " erased");
-    }
-
-    @GetMapping("/findall")
-    public ResponseEntity<?> findAll() {
-        List<User> userList = userService.findAll();
-        return ResponseEntity.ok(userList);
-    }
+        @DeleteMapping("delete/{id}")
+        public ResponseEntity<?> delete(@PathVariable long id){
+            userService.delete(id);
+            return ResponseEntity.ok("user " + id + "deleted");
+        }
+        
 }

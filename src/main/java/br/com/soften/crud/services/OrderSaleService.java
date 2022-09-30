@@ -37,7 +37,7 @@ public class OrderSaleService {
     public OrderSale save(OrderSaleDto saleDto) {
 
         Client client = clientService.find(saleDto.getClient());
-        User user = userService.findById(saleDto.getUser());
+        User user = userService.find(saleDto.getUser());
         List<OrderSaleItemsDto> items = saleDto.getOrderSaleItems();
         items.stream().filter(e -> e.getUnitaryValue() == null).forEach(e -> {
             e.setUnitaryValue(
@@ -79,10 +79,11 @@ public class OrderSaleService {
 
     public OrderSale ImportBudget(long id) {
         SalesBudget budget = salesBudgetService.findById(id);
+        budget.getOrderSaleItems().stream()
         OrderSale orderSale =
                 OrderSale.builder()
                         .client(budget.getClient())
-                        .orderSaleItems(budget.getOrderSaleItems())
+                        .orderSaleItems()
                         .totalValue(budget.getTotalValue())
                         .user(budget.getUser())
                         .build();

@@ -24,7 +24,7 @@ public class OrderSale{
     private BigDecimal totalValue;
 
     @OneToMany()
-    @JoinColumn(name = "order_sale")
+    @JoinColumn(name = "order_sale" )
     private List<OrderSaleItems> orderSaleItems;
 
     @ManyToOne

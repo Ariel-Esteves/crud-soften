@@ -1,6 +1,5 @@
 package br.com.soften.crud.services;
 
-import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.Dto.OrderSaleItemsDto;
 import br.com.soften.crud.models.entities.*;
@@ -37,9 +36,10 @@ public class SalesBudgetService {
         this.salesBudgetRepository = salesBudget;
     }
 
+
     public SalesBudget save( OrderSaleDto saleDto ){
         Client client = clientService.find(saleDto.getClient());
-        User user = userService.findById(saleDto.getUser());
+        User user = userService.find(saleDto.getUser());
         List<OrderSaleItemsDto> items = saleDto.getOrderSaleItems();
         items.stream().filter(e -> e.getUnitaryValue() == null).forEach(e -> {
             e.setUnitaryValue(
@@ -79,7 +79,7 @@ public class SalesBudgetService {
 
     public SalesBudget findById( long id ){
         Optional<SalesBudget> data = salesBudgetRepository.findById(id);
-        return data.orElseThrow(( ) -> new ResourceNotFoundException(id));
+        return data.orElse(null);
     }
 
     public void delete( long id ){

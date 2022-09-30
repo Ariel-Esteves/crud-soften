@@ -38,7 +38,7 @@ public class OrderSalesController {
         return ResponseEntity.ok(sales);
     }
 
-    @PostMapping("/TransformIntoSale/{id}")
+    @PostMapping("/convert/{id}")
     public ResponseEntity<?> importBudget( @PathVariable Long id ){
         OrderSale budget = orderSaleService.ImportBudget(id);
         return ResponseEntity.ok(budget);

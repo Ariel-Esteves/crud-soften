@@ -23,7 +23,7 @@ public class ProductService {
 
 
     public Product save(Product data, long user_id) {
-        User user = userService.findById(user_id);
+        User user = userService.find(user_id);
         data.setUser(user);
         return productRepository.save(data);
     }
