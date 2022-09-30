@@ -41,7 +41,7 @@ public class SalesBudgetService {
 
 
     public SalesBudget save( OrderSaleDto saleDto ){
-        Client client = clientService.find(saleDto.getClient());
+        Client client = clientService.find(1L);
         User user = userService.find(saleDto.getUser());
         List<OrderSaleItemsDto> items = saleDto.getOrderSaleItems();
         items.stream().filter(e -> e.getUnitaryValue() == null).forEach(e -> {

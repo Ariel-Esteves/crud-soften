@@ -1,9 +1,11 @@
 package br.com.soften.crud.services;
+
 import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.models.entities.User;
 import br.com.soften.crud.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

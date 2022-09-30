@@ -1,6 +1,5 @@
 package br.com.soften.crud.services;
 
-import br.com.soften.crud.exceptions.ResourceNotFoundException;
 import br.com.soften.crud.models.Dto.OrderSaleDto;
 import br.com.soften.crud.models.Dto.OrderSaleItemsDto;
 import br.com.soften.crud.models.entities.*;
@@ -78,8 +77,24 @@ public class OrderSaleService {
     }
 
     public OrderSale ImportBudget(long id) {
-        OrderSale sale = orderSaleRepository.findById(id).orElse(null);
-        sale.getOrderSaleItems().stream().forEach(e -> );
+        SalesBudget sale = salesBudgetService.findById(id);
+        List<OrderSaleItems> orderSaleItems = sale.getBudgetItems().stream().map(e ->
+                OrderSaleItems.builder()
+                        .amount(e.getAmount())
+                        .unitaryValue(e.getUnitaryValue())
+                        .product(e.getProduct())
+                        .totalValue(e.getTotalValue())
+                        .build()).collect(Collectors.toList());
+        orderSaleItems.forEach(e -> orderSaleItemsRepository.save(e));
+
+
+        OrderSale orderSale = OrderSale.builder()
+                .orderSaleItems(orderSaleItems)
+                .client(sale.getClient())
+                .user(sale.getUser())
+                .totalValue(sale.getTotalValue())
+                .build();
+        return orderSaleRepository.save(orderSale);
     }
 
     public OrderSale findById(long id) {
@@ -95,7 +110,7 @@ public class OrderSaleService {
         return orderSaleRepository.findAll();
     }
 
-    public List<OrderSale> findByClient(long id){
+    public List<OrderSale> findByClient(long id) {
         Client client = clientService.find(id);
         return orderSaleRepository.findByClient(client);
     }

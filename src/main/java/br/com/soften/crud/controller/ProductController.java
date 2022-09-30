@@ -1,6 +1,5 @@
 package br.com.soften.crud.controller;
 
-import br.com.soften.crud.models.entities.Client;
 import br.com.soften.crud.models.entities.Product;
 import br.com.soften.crud.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

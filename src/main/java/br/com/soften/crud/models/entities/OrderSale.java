@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,7 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 public class OrderSale{
 
@@ -23,7 +21,7 @@ public class OrderSale{
     @Column(precision = 10, scale = 4)
     private BigDecimal totalValue;
 
-    @OneToMany()
+    @OneToMany
     @JoinColumn(name = "order_items" )
     private List<OrderSaleItems> orderSaleItems;
 
