@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
+// comecei a estudar testes, mas por perceber que consumiria muito tempo eu apenas estudei as principais funcionalidade e exemplos mais simplificados e também não tentei aplicar para não me enrolar
 @DataJpaTest // is used to run jpa with our test
 class CrudApplicationTests{
 

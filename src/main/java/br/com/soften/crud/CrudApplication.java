@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CrudApplication{
 
 
-    // Recomendo o uso do plugin Better Comments
+    // Recomendo o uso do plugin Better Comments           - Desculpa Léo até instalei mas não pesquisei como usar
     // Comentários simples são questões a melhorar
     // Comentários com * são dicas Ex: //* Dica
     // Comentários com ? são dúvidas Ex: //? Dúvida

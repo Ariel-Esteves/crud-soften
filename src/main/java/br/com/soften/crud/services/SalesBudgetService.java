@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-;
-
 @Service
 public class SalesBudgetService {
 
@@ -39,6 +37,7 @@ public class SalesBudgetService {
         this.budgetItemsRepository = budgetItemsRepository;
     }
 
+    //o mesmo conceito do OrdersaleService foi aplicado aqui.
 
     public SalesBudget save( OrderSaleDto saleDto ){
         Client client = clientService.find(1L);

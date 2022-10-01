@@ -39,8 +39,10 @@ public class SalesBudgetControler{
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteById( @PathVariable Long id) {
+
         salesBudgetService.delete(id);
+        return ResponseEntity.status(202).body("Budget " + id + " erased" );
     }
 
     @RequestMapping("/findall")

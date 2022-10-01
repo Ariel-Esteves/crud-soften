@@ -21,7 +21,7 @@ public class SalesBudget{
     @Column(precision = 10, scale = 4)
     private BigDecimal totalValue;
 
-    @OneToMany()
+    @OneToMany // fetch = FetchType.LAZY não funcionou comigo, não consegui usar
     @JoinColumn(name = "budget_items")
     private List<BudgetItems> budgetItems;
 

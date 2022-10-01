@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
+//talvez não seja a melhor forma de utilizar dto, mas no meio de tantas pesquisas que eu vi foi a forma como achei maior utilidade
 public class OrderSaleDto{
     private Long id;
 

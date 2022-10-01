@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
+// tratamento de erro, implementei algumas vezes para treinar o processo, entendi o necessário e acredito que consigo replicar facilmente com consulta
 @RestControllerAdvice
 public class ErrorHandlerForm{
     @Autowired

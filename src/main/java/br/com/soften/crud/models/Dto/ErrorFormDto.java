@@ -7,6 +7,5 @@ import lombok.Data;
 @Builder
 public class ErrorFormDto{
     String field;
-
     String ErrorMessage;
 }

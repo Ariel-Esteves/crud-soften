@@ -38,17 +38,27 @@ public class OrderSaleService {
         Client client = clientService.find(saleDto.getClient());
         User user = userService.find(saleDto.getUser());
         List<OrderSaleItemsDto> items = saleDto.getOrderSaleItems();
+
+        //código destinado a localizar o preço unitario em caso do valor da OrderSaleItemsDto(items) estar zerado
+        //a intenção aqui foi dar a opção ao cliente de usar o valor personalizado, ou do próprio cad. do produto
+
         items.stream().filter(e -> e.getUnitaryValue() == null).forEach(e -> {
             e.setUnitaryValue(
-                    productService.find(e.getProduct()).getSaleValue()
+                    productService.find( e.getProduct() ).getSaleValue()
             );
         });
+        // nessa parte fazemos o calculo do valor unitário contido no OrderSaleItemsDto(items) multiplicando pela quantidade.
+
         items.stream().forEach(e -> e.setTotalValue(e.getUnitaryValue().multiply(e.getAmount())));
+
+        // foi mapeado o valor total de cada OrderSaleItem(item) e somado para  valor total pertencente ao OrderSale
 
         BigDecimal total = items.stream().map(a -> a.getTotalValue()).reduce((a, e) -> a.add(e)).get();
 
+
         List<OrderSaleItems> orderSaleItems =
                 items.stream().map(e -> {
+                    //nessa parte peguei o cód do produto que esta no OrderSaleItemsdto, e fiz a busca através do código
                     Product product = productService.find(e.getProduct());
                     OrderSaleItems orderedItems =
                             OrderSaleItems.builder()
@@ -97,7 +107,7 @@ public class OrderSaleService {
         return orderSaleRepository.save(orderSale);
     }
 
-    public OrderSale findById(long id) {
+    public OrderSale find(long id) {
         Optional<OrderSale> data = orderSaleRepository.findById(id);
         return data.orElse(null);
     }
@@ -108,11 +118,6 @@ public class OrderSaleService {
 
     public List<OrderSale> findAll() {
         return orderSaleRepository.findAll();
-    }
-
-    public List<OrderSale> findByClient(long id) {
-        Client client = clientService.find(id);
-        return orderSaleRepository.findByClient(client);
     }
 
 }

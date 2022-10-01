@@ -34,7 +34,7 @@ public class OrderSalesController {
 
     @RequestMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        OrderSale sales = orderSaleService.findById(id);
+        OrderSale sales = orderSaleService.find(id);
         return ResponseEntity.ok(sales);
     }
 
@@ -55,6 +55,5 @@ public class OrderSalesController {
         List<OrderSale> res = orderSaleService.findAll();
         return ResponseEntity.ok(res);
     }
-
 
 }
